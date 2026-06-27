@@ -28,6 +28,29 @@
       </nav>
     </header>
 
+    <aside class="chapter-rail" aria-label="Scene progress">
+      <button class="rail-link is-current" type="button" data-target="hero-zone">
+        <span class="rail-index">I</span>
+        <span class="rail-copy">Arrival</span>
+      </button>
+      <button class="rail-link" type="button" data-target="threshold">
+        <span class="rail-index">II</span>
+        <span class="rail-copy">Threshold</span>
+      </button>
+      <button class="rail-link" type="button" data-target="houses">
+        <span class="rail-index">III</span>
+        <span class="rail-copy">Houses</span>
+      </button>
+      <button class="rail-link" type="button" data-target="vault">
+        <span class="rail-index">IV</span>
+        <span class="rail-copy">Vault</span>
+      </button>
+      <button class="rail-link" type="button" data-target="review">
+        <span class="rail-index">V</span>
+        <span class="rail-copy">Review</span>
+      </button>
+    </aside>
+
     <main>
       <section class="hero-scroll-zone" id="hero-zone">
         <div class="hero-stage">
@@ -164,6 +187,28 @@
             <p>Archivists who map prophecy through living sigils.</p>
           </article>
         </div>
+        <div class="faction-console reveal-card" aria-live="polite">
+          <p class="eyebrow">Faction Dossier</p>
+          <div class="faction-switcher" role="tablist" aria-label="Faction selector">
+            <button class="faction-tab is-active" type="button" data-faction="choir">Ember Choir</button>
+            <button class="faction-tab" type="button" data-faction="obsidian">Obsidian Wing</button>
+            <button class="faction-tab" type="button" data-faction="silver">Silver Veil</button>
+          </div>
+          <h3 id="faction-title">Ember Choir</h3>
+          <p id="faction-text">
+            Choir acolytes trade memory, voice, and ceremony to awaken flame relics before any other house can bind them.
+          </p>
+          <div class="faction-metrics">
+            <article>
+              <span class="metric-kicker" id="faction-kicker-a">Rite Speed</span>
+              <strong id="faction-value-a">Fast</strong>
+            </article>
+            <article>
+              <span class="metric-kicker" id="faction-kicker-b">Relic Bias</span>
+              <strong id="faction-value-b">Pyre Glass</strong>
+            </article>
+          </div>
+        </div>
       </section>
 
       <section class="chapter-scene parallax-scene" id="vault">
@@ -190,6 +235,28 @@
             <span>04</span>
             <p>Hidden endings</p>
           </article>
+        </div>
+        <div class="relic-console reveal-card" aria-live="polite">
+          <p class="eyebrow">Relic Spotlight</p>
+          <div class="relic-switcher" role="tablist" aria-label="Relic selector">
+            <button class="relic-tab is-active" type="button" data-relic="pyre">Pyre Glass</button>
+            <button class="relic-tab" type="button" data-relic="veil">Veil Needle</button>
+            <button class="relic-tab" type="button" data-relic="crown">Crown Ash</button>
+          </div>
+          <h3 id="relic-title">Pyre Glass</h3>
+          <p id="relic-text">
+            A heat-locked shard that amplifies ritual outcomes at the cost of memory drift inside the nave.
+          </p>
+          <div class="relic-metrics">
+            <article>
+              <span class="metric-kicker" id="relic-kicker-a">Risk</span>
+              <strong id="relic-value-a">High</strong>
+            </article>
+            <article>
+              <span class="metric-kicker" id="relic-kicker-b">Favored By</span>
+              <strong id="relic-value-b">Ember Choir</strong>
+            </article>
+          </div>
         </div>
       </section>
 

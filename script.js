@@ -40,8 +40,77 @@ const revealCards = [...document.querySelectorAll(".reveal-card")];
 const heroZone = document.getElementById("hero-zone");
 const heroStage = document.querySelector(".hero-stage");
 const scenes = [...document.querySelectorAll(".parallax-scene")];
+const railLinks = [...document.querySelectorAll(".rail-link")];
+const factionTabs = [...document.querySelectorAll(".faction-tab")];
+const relicTabs = [...document.querySelectorAll(".relic-tab")];
+const factionTitle = document.getElementById("faction-title");
+const factionText = document.getElementById("faction-text");
+const factionKickerA = document.getElementById("faction-kicker-a");
+const factionValueA = document.getElementById("faction-value-a");
+const factionKickerB = document.getElementById("faction-kicker-b");
+const factionValueB = document.getElementById("faction-value-b");
+const relicTitle = document.getElementById("relic-title");
+const relicText = document.getElementById("relic-text");
+const relicKickerA = document.getElementById("relic-kicker-a");
+const relicValueA = document.getElementById("relic-value-a");
+const relicKickerB = document.getElementById("relic-kicker-b");
+const relicValueB = document.getElementById("relic-value-b");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const hasGsap = Boolean(window.gsap && window.ScrollTrigger && !prefersReducedMotion);
+
+const factionData = {
+  choir: {
+    title: "Ember Choir",
+    text: "Choir acolytes trade memory, voice, and ceremony to awaken flame relics before any other house can bind them.",
+    kickerA: "Rite Speed",
+    valueA: "Fast",
+    kickerB: "Relic Bias",
+    valueB: "Pyre Glass",
+  },
+  obsidian: {
+    title: "Obsidian Wing",
+    text: "The Wing turns scripture into military doctrine, favoring precision strikes, sealed vows, and defensive relic grids.",
+    kickerA: "Veil Impact",
+    valueA: "Stable",
+    kickerB: "Battle Doctrine",
+    valueB: "Sentinel Lock",
+  },
+  silver: {
+    title: "Silver Veil",
+    text: "Archivists of the Silver Veil interpret living sigils to uncover alternate endings and reroute prophecy branches.",
+    kickerA: "Archive Reach",
+    valueA: "Deep",
+    kickerB: "Gift",
+    valueB: "Path Reading",
+  },
+};
+
+const relicData = {
+  pyre: {
+    title: "Pyre Glass",
+    text: "A heat-locked shard that amplifies ritual outcomes at the cost of memory drift inside the nave.",
+    kickerA: "Risk",
+    valueA: "High",
+    kickerB: "Favored By",
+    valueB: "Ember Choir",
+  },
+  veil: {
+    title: "Veil Needle",
+    text: "A silver filament used to stitch prophecy tears shut before rival houses can exploit them.",
+    kickerA: "Risk",
+    valueA: "Medium",
+    kickerB: "Favored By",
+    valueB: "Silver Veil",
+  },
+  crown: {
+    title: "Crown Ash",
+    text: "Ash gathered from failed coronations that can harden a faction route into a permanent branch.",
+    kickerA: "Risk",
+    valueA: "Severe",
+    kickerB: "Favored By",
+    valueB: "Obsidian Wing",
+  },
+};
 
 function setPanel(key) {
   const panel = panels[key];
@@ -78,6 +147,55 @@ openModalButton.addEventListener("click", () => {
   }
 });
 
+function setActiveRail(targetId) {
+  railLinks.forEach((link) => {
+    link.classList.toggle("is-current", link.dataset.target === targetId);
+  });
+}
+
+railLinks.forEach((link) => {
+  link.addEventListener("click", () => {
+    document.getElementById(link.dataset.target)?.scrollIntoView({
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+      block: "start",
+    });
+  });
+});
+
+function setFaction(key) {
+  const item = factionData[key];
+  factionTitle.textContent = item.title;
+  factionText.textContent = item.text;
+  factionKickerA.textContent = item.kickerA;
+  factionValueA.textContent = item.valueA;
+  factionKickerB.textContent = item.kickerB;
+  factionValueB.textContent = item.valueB;
+  factionTabs.forEach((tab) => {
+    tab.classList.toggle("is-active", tab.dataset.faction === key);
+  });
+}
+
+function setRelic(key) {
+  const item = relicData[key];
+  relicTitle.textContent = item.title;
+  relicText.textContent = item.text;
+  relicKickerA.textContent = item.kickerA;
+  relicValueA.textContent = item.valueA;
+  relicKickerB.textContent = item.kickerB;
+  relicValueB.textContent = item.valueB;
+  relicTabs.forEach((tab) => {
+    tab.classList.toggle("is-active", tab.dataset.relic === key);
+  });
+}
+
+factionTabs.forEach((tab) => {
+  tab.addEventListener("click", () => setFaction(tab.dataset.faction));
+});
+
+relicTabs.forEach((tab) => {
+  tab.addEventListener("click", () => setRelic(tab.dataset.relic));
+});
+
 function initRevealFallback() {
   if ("IntersectionObserver" in window) {
     const revealObserver = new IntersectionObserver(
@@ -95,6 +213,25 @@ function initRevealFallback() {
   } else {
     revealCards.forEach((card) => card.classList.add("is-visible"));
   }
+}
+
+if ("IntersectionObserver" in window) {
+  const sectionObserver = new IntersectionObserver(
+    (entries) => {
+      const visibleEntries = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+      if (visibleEntries[0]) {
+        setActiveRail(visibleEntries[0].target.id);
+      }
+    },
+    { threshold: [0.25, 0.45, 0.65] }
+  );
+
+  [heroZone, ...scenes, document.getElementById("review")].filter(Boolean).forEach((section) => {
+    sectionObserver.observe(section);
+  });
 }
 
 function initPointerDepth() {
@@ -259,3 +396,6 @@ if (hasGsap) {
 if (!prefersReducedMotion) {
   initPointerDepth();
 }
+
+setFaction("choir");
+setRelic("pyre");
