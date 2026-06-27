@@ -33,20 +33,28 @@
         <span class="rail-index">I</span>
         <span class="rail-copy">Arrival</span>
       </button>
-      <button class="rail-link" type="button" data-target="threshold">
+      <button class="rail-link" type="button" data-target="descent">
         <span class="rail-index">II</span>
+        <span class="rail-copy">Descent</span>
+      </button>
+      <button class="rail-link" type="button" data-target="threshold">
+        <span class="rail-index">III</span>
         <span class="rail-copy">Threshold</span>
       </button>
       <button class="rail-link" type="button" data-target="houses">
-        <span class="rail-index">III</span>
+        <span class="rail-index">IV</span>
         <span class="rail-copy">Houses</span>
       </button>
       <button class="rail-link" type="button" data-target="vault">
-        <span class="rail-index">IV</span>
+        <span class="rail-index">V</span>
         <span class="rail-copy">Vault</span>
       </button>
+      <button class="rail-link" type="button" data-target="command">
+        <span class="rail-index">VI</span>
+        <span class="rail-copy">Command</span>
+      </button>
       <button class="rail-link" type="button" data-target="review">
-        <span class="rail-index">V</span>
+        <span class="rail-index">VII</span>
         <span class="rail-copy">Review</span>
       </button>
     </aside>
@@ -139,6 +147,42 @@
           <div class="scroll-meter motion-layer" aria-hidden="true" data-depth="26" data-hero-speed="-260">
             <span></span>
           </div>
+        </div>
+      </section>
+
+      <section class="descent-section" id="descent">
+        <div class="descent-stage">
+          <div class="descent-corridor">
+            <article class="walk-node" data-stop="gate">
+              <span class="walk-index">I</span>
+              <h2>Cross The Gate</h2>
+              <p>Entry starts in trance: choose to go deeper and accept that the world watches back.</p>
+            </article>
+            <article class="walk-node" data-stop="faction">
+              <span class="walk-index">II</span>
+              <h2>Bind To A House</h2>
+              <p>Allegiance shapes your route, your rivals, and the kinds of relics that answer your touch.</p>
+            </article>
+            <article class="walk-node" data-stop="trial">
+              <span class="walk-index">III</span>
+              <h2>Face The Trials</h2>
+              <p>Predictions, puzzles, creative challenges, and shared raids become the real progression loop.</p>
+            </article>
+            <article class="walk-node" data-stop="pulse">
+              <span class="walk-index">IV</span>
+              <h2>Alter The Pulse</h2>
+              <p>When the stream goes live, the world sharpens and your off-stream actions finally hit the stage.</p>
+            </article>
+          </div>
+
+          <aside class="descent-ledger reveal-card">
+            <p class="eyebrow">Guided Descent</p>
+            <h3>Step in, don&apos;t just browse</h3>
+            <p>
+              This corridor is the first real universe walk-through: a pinned passage with perspective depth, snap
+              beats, and narrative stations that frame the app as a living world.
+            </p>
+          </aside>
         </div>
       </section>
 
@@ -257,6 +301,83 @@
               <strong id="relic-value-b">Ember Choir</strong>
             </article>
           </div>
+        </div>
+      </section>
+
+      <section class="player-command-section" id="command">
+        <div class="section-heading reveal-card">
+          <p class="eyebrow">Player Command</p>
+          <h2>The app behind the atmosphere</h2>
+          <p>
+            Players enter a living social game: choose allegiance, build reputation, influence outcomes, and stay
+            engaged whether the stream is live or silent.
+          </p>
+        </div>
+
+        <div class="command-mode-bar reveal-card" role="tablist" aria-label="Engagement mode">
+          <button class="mode-tab is-active" type="button" data-mode="solo">Solo Arc</button>
+          <button class="mode-tab" type="button" data-mode="cabal">Faction Cabal</button>
+          <button class="mode-tab" type="button" data-mode="live">Live Pulse</button>
+        </div>
+
+        <div class="command-grid">
+          <section class="command-panel reveal-card">
+            <p class="eyebrow">Identity</p>
+            <h3 id="mode-title">Solo Arc</h3>
+            <p id="mode-text">
+              Personal exploration leans into puzzles, reputation routes, secret relics, and private progression that
+              still matters when the whole community wakes up.
+            </p>
+            <div class="command-stats">
+              <article>
+                <span class="metric-kicker" id="mode-kicker-a">Primary Loop</span>
+                <strong id="mode-value-a">Puzzle Hunts</strong>
+              </article>
+              <article>
+                <span class="metric-kicker" id="mode-kicker-b">Best For</span>
+                <strong id="mode-value-b">Off-stream nights</strong>
+              </article>
+            </div>
+          </section>
+
+          <section class="command-panel mission-panel reveal-card">
+            <p class="eyebrow">Mission Board</p>
+            <div class="mission-list">
+              <article class="mission-item">
+                <span class="mission-type">Prediction</span>
+                <h4 id="mission-title-a">Guess the next cathedral rupture</h4>
+                <p id="mission-text-a">Players commit to a prophecy lane before the next live event reshapes the map.</p>
+              </article>
+              <article class="mission-item">
+                <span class="mission-type">Creative Trial</span>
+                <h4 id="mission-title-b">Design a house sigil mutation</h4>
+                <p id="mission-text-b">Entries earn favor, unlock cosmetics, and can become canon to the current season.</p>
+              </article>
+              <article class="mission-item">
+                <span class="mission-type">Faction Raid</span>
+                <h4 id="mission-title-c">Recover a relic shard before rivals do</h4>
+                <p id="mission-text-c">Shared progress pulls the whole faction closer to a timed server-wide reveal.</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="command-panel pulse-panel reveal-card">
+            <p class="eyebrow">System Pulse</p>
+            <div class="pulse-track">
+              <article>
+                <span>01</span>
+                <p>Profile and faction standing persist between sessions.</p>
+              </article>
+              <article>
+                <span>02</span>
+                <p>Votes, puzzles, and challenges shape global chapter outcomes.</p>
+              </article>
+              <article>
+                <span>03</span>
+                <p>Live streams become a climax, not the only place the world moves.</p>
+              </article>
+            </div>
+          </section>
         </div>
       </section>
 

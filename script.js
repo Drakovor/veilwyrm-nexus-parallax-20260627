@@ -39,6 +39,8 @@ const motionLayers = [...document.querySelectorAll(".motion-layer")];
 const revealCards = [...document.querySelectorAll(".reveal-card")];
 const heroZone = document.getElementById("hero-zone");
 const heroStage = document.querySelector(".hero-stage");
+const descentSection = document.getElementById("descent");
+const walkNodes = [...document.querySelectorAll(".walk-node")];
 const scenes = [...document.querySelectorAll(".parallax-scene")];
 const railLinks = [...document.querySelectorAll(".rail-link")];
 const factionTabs = [...document.querySelectorAll(".faction-tab")];
@@ -290,6 +292,10 @@ function initGsapParallax() {
         onUpdate: (self) => {
           document.documentElement.style.setProperty("--hero-progress", self.progress.toFixed(4));
         },
+        snap: {
+          snapTo: [0, 0.18, 0.42, 0.68, 1],
+          duration: { min: 0.18, max: 0.5 },
+        },
       },
     });
 
@@ -308,6 +314,56 @@ function initGsapParallax() {
       document.documentElement.style.setProperty("--hero-progress", "0");
     };
   });
+
+  if (descentSection && walkNodes.length) {
+    const descentTimeline = gsap.timeline({
+      defaults: { ease: "none" },
+      scrollTrigger: {
+        trigger: descentSection,
+        start: "top top",
+        end: "+=240%",
+        pin: ".descent-stage",
+        scrub: 1,
+        anticipatePin: 1,
+        snap: {
+          snapTo: [0, 0.25, 0.5, 0.75, 1],
+          duration: { min: 0.2, max: 0.55 },
+        },
+      },
+    });
+
+    walkNodes.forEach((node, index) => {
+      gsap.set(node, {
+        "--node-z": "-1400px",
+        "--node-tilt": "18deg",
+        "--node-scale": 0.72,
+        "--node-opacity": 0,
+      });
+
+      const start = index * 0.22;
+      descentTimeline
+        .to(
+          node,
+          {
+            "--node-z": "-180px",
+            "--node-tilt": "6deg",
+            "--node-scale": 0.92,
+            "--node-opacity": 1,
+          },
+          start
+        )
+        .to(
+          node,
+          {
+            "--node-z": "520px",
+            "--node-tilt": "-8deg",
+            "--node-scale": 1.16,
+            "--node-opacity": 0,
+          },
+          start + 0.18
+        );
+    });
+  }
 
   scenes.forEach((scene) => {
     const bg = scene.querySelector(".scene-bg");
