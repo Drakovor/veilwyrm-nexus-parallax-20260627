@@ -63,6 +63,50 @@
       </button>
     </aside>
 
+    <aside class="world-hud" aria-live="polite" aria-label="Nexus world state">
+      <div class="hud-radar" aria-hidden="true">
+        <span class="hud-ring hud-ring-a"></span>
+        <span class="hud-ring hud-ring-b"></span>
+        <span class="hud-ring hud-ring-c"></span>
+        <span class="hud-pulse"></span>
+      </div>
+
+      <div class="hud-copy">
+        <p class="eyebrow">World State</p>
+        <h2 id="hud-title">Arrival Vector</h2>
+        <p id="hud-text">
+          The gate is still open. Atmosphere, myth, and the sovereign dossier are carrying the first pull into the
+          universe.
+        </p>
+      </div>
+
+      <div class="hud-metrics">
+        <article>
+          <span class="metric-kicker" id="hud-kicker-a">Active Layer</span>
+          <strong id="hud-value-a">Hero Ritual</strong>
+        </article>
+        <article>
+          <span class="metric-kicker" id="hud-kicker-b">Player Mood</span>
+          <strong id="hud-value-b">Curiosity and awe</strong>
+        </article>
+      </div>
+
+      <div class="hud-signal-list">
+        <article class="hud-signal is-active" data-hud-signal="arrival">
+          <span>01</span>
+          <p>Arrival vector</p>
+        </article>
+        <article class="hud-signal" data-hud-signal="descent">
+          <span>02</span>
+          <p>Veil descent</p>
+        </article>
+        <article class="hud-signal" data-hud-signal="social">
+          <span>03</span>
+          <p>Faction/social game</p>
+        </article>
+      </div>
+    </aside>
+
     <main>
       <section class="hero-scroll-zone" id="hero-zone">
         <div class="hero-stage">

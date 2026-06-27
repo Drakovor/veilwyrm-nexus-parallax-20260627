@@ -48,6 +48,13 @@ const scenes = [...document.querySelectorAll(".parallax-scene")];
 const railLinks = [...document.querySelectorAll(".rail-link")];
 const commandSection = document.getElementById("command");
 const reviewSection = document.getElementById("review");
+const hudTitle = document.getElementById("hud-title");
+const hudText = document.getElementById("hud-text");
+const hudKickerA = document.getElementById("hud-kicker-a");
+const hudValueA = document.getElementById("hud-value-a");
+const hudKickerB = document.getElementById("hud-kicker-b");
+const hudValueB = document.getElementById("hud-value-b");
+const hudSignals = [...document.querySelectorAll(".hud-signal")];
 const factionTabs = [...document.querySelectorAll(".faction-tab")];
 const relicTabs = [...document.querySelectorAll(".relic-tab")];
 const modeTabs = [...document.querySelectorAll(".mode-tab")];
@@ -339,6 +346,81 @@ const portalHouseData = {
   },
 };
 
+const hudData = {
+  "hero-zone": {
+    title: "Arrival Vector",
+    text: "The gate is still open. Atmosphere, myth, and the sovereign dossier are carrying the first pull into the universe.",
+    kickerA: "Active Layer",
+    valueA: "Hero Ritual",
+    kickerB: "Player Mood",
+    valueB: "Curiosity and awe",
+    signal: "arrival",
+  },
+  descent: {
+    title: "Veil Descent",
+    text: "The world stops being a poster here. Perspective, snap beats, and passage timing push the visitor into a guided crossing.",
+    kickerA: "Active Layer",
+    valueA: "Cathedral passage",
+    kickerB: "Player Mood",
+    valueB: "Trance and tension",
+    signal: "descent",
+  },
+  threshold: {
+    title: "Ritual Threshold",
+    text: "The first chapter confirms the universe has history, tempo, and dynasties waiting behind the first opened gate.",
+    kickerA: "Active Layer",
+    valueA: "Midnight rites",
+    kickerB: "Player Mood",
+    valueB: "Ceremony and intrigue",
+    signal: "descent",
+  },
+  houses: {
+    title: "Faction Gravity",
+    text: "Identity stops being abstract in the houses chapter. Rivalry, aesthetics, and house doctrine begin to anchor the social game.",
+    kickerA: "Active Layer",
+    valueA: "House selection",
+    kickerB: "Player Mood",
+    valueB: "Belonging and rivalry",
+    signal: "social",
+  },
+  vault: {
+    title: "Relic Pressure",
+    text: "The archive introduces consequences. Relics make power tangible, risky, and tied to faction routes rather than floating lore.",
+    kickerA: "Active Layer",
+    valueA: "Relic economy",
+    kickerB: "Player Mood",
+    valueB: "Temptation and risk",
+    signal: "social",
+  },
+  pilgrimage: {
+    title: "Season Engine",
+    text: "This chamber reframes the whole project as a living campaign where outsider curiosity becomes profile, faction, reputation, and live consequence.",
+    kickerA: "Active Layer",
+    valueA: "World progression map",
+    kickerB: "Player Mood",
+    valueB: "Orientation and pull",
+    signal: "social",
+  },
+  command: {
+    title: "Command Chamber",
+    text: "The app layer is now explicit: solo play, faction cabals, and live pulse all read as one connected ritual system.",
+    kickerA: "Active Layer",
+    valueA: "Playable loop",
+    kickerB: "Player Mood",
+    valueB: "Agency and momentum",
+    signal: "social",
+  },
+  review: {
+    title: "Nexus Audit",
+    text: "The build review closes the path by showing the world is not static anymore. It has entry, passage, systems, and a visible internal logic.",
+    kickerA: "Active Layer",
+    valueA: "Build reflection",
+    kickerB: "Player Mood",
+    valueB: "Retention and clarity",
+    signal: "social",
+  },
+};
+
 let currentMode = "";
 let currentPilgrimage = "";
 let currentPortalStage = "";
@@ -458,6 +540,26 @@ modal?.addEventListener("close", () => {
 function setActiveRail(targetId) {
   railLinks.forEach((link) => {
     link.classList.toggle("is-current", link.dataset.target === targetId);
+  });
+}
+
+function setHud(targetId) {
+  const item = hudData[targetId];
+  if (!item || !hudTitle || !hudText) {
+    return;
+  }
+
+  document.body.classList.toggle("show-world-hud", targetId !== "hero-zone");
+
+  hudTitle.textContent = item.title;
+  hudText.textContent = item.text;
+  hudKickerA.textContent = item.kickerA;
+  hudValueA.textContent = item.valueA;
+  hudKickerB.textContent = item.kickerB;
+  hudValueB.textContent = item.valueB;
+
+  hudSignals.forEach((signal) => {
+    signal.classList.toggle("is-active", signal.dataset.hudSignal === item.signal);
   });
 }
 
@@ -627,6 +729,7 @@ if ("IntersectionObserver" in window) {
 
       if (visibleEntries[0]) {
         setActiveRail(visibleEntries[0].target.id);
+        setHud(visibleEntries[0].target.id);
       }
     },
     { threshold: [0.25, 0.45, 0.65] }
@@ -932,6 +1035,7 @@ setPilgrimage("profile");
 setMode("solo");
 setPortalStage("identity");
 setPortalHouse("choir");
+setHud("hero-zone");
 
 const params = new URLSearchParams(window.location.search);
 if (params.get("portal") === "1") {
