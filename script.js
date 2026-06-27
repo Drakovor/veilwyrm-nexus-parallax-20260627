@@ -35,6 +35,7 @@ const cycleButton = document.getElementById("cycle-panel");
 const ambienceButton = document.getElementById("toggle-ambience");
 const modal = document.getElementById("nexus-modal");
 const openModalButton = document.getElementById("open-modal");
+const modalShell = document.querySelector(".nexus-modal-shell");
 const motionLayers = [...document.querySelectorAll(".motion-layer")];
 const revealCards = [...document.querySelectorAll(".reveal-card")];
 const heroZone = document.getElementById("hero-zone");
@@ -78,6 +79,21 @@ const pilgrimageKickerA = document.getElementById("pilgrimage-kicker-a");
 const pilgrimageValueA = document.getElementById("pilgrimage-value-a");
 const pilgrimageKickerB = document.getElementById("pilgrimage-kicker-b");
 const pilgrimageValueB = document.getElementById("pilgrimage-value-b");
+const portalStageTabs = [...document.querySelectorAll(".portal-stage-tab")];
+const portalHouseTabs = [...document.querySelectorAll(".portal-house-tab")];
+const portalRouteItems = [...document.querySelectorAll(".portal-route-item")];
+const portalStageTitle = document.getElementById("portal-stage-title");
+const portalStageText = document.getElementById("portal-stage-text");
+const portalKickerA = document.getElementById("portal-kicker-a");
+const portalValueA = document.getElementById("portal-value-a");
+const portalKickerB = document.getElementById("portal-kicker-b");
+const portalValueB = document.getElementById("portal-value-b");
+const portalHouseTitle = document.getElementById("portal-house-title");
+const portalHouseText = document.getElementById("portal-house-text");
+const portalHouseKickerA = document.getElementById("portal-house-kicker-a");
+const portalHouseValueA = document.getElementById("portal-house-value-a");
+const portalHouseKickerB = document.getElementById("portal-house-kicker-b");
+const portalHouseValueB = document.getElementById("portal-house-value-b");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const hasGsap = Boolean(window.gsap && window.ScrollTrigger && !prefersReducedMotion);
 
@@ -266,8 +282,67 @@ const pilgrimageData = {
   },
 };
 
+const portalStageData = {
+  identity: {
+    title: "Choose a visible role",
+    text: "Start with a sigil, a title, and a tone so even an outsider can feel like they crossed into a living faction world instead of joining a flat account system.",
+    kickerA: "Immediate Reward",
+    valueA: "Identity and aura",
+    kickerB: "Long Arc",
+    valueB: "Reputation becomes myth",
+    route: "solo",
+  },
+  house: {
+    title: "Bind to a house before the first night",
+    text: "Your house is your social gravity. It decides the flavor of rivalries, the tone of rewards, and what kind of lore the player is invited to chase first.",
+    kickerA: "Immediate Reward",
+    valueA: "Belonging and rivalry",
+    kickerB: "Long Arc",
+    valueB: "Faction status shapes canon",
+    route: "cabal",
+  },
+  objective: {
+    title: "Aim at a first objective with consequence",
+    text: "The opening quest should never feel disposable. It needs to feed the next live event so the stream becomes the payoff for choices already made.",
+    kickerA: "Immediate Reward",
+    valueA: "First favor thread",
+    kickerB: "Long Arc",
+    valueB: "Live events inherit memory",
+    route: "live",
+  },
+};
+
+const portalHouseData = {
+  choir: {
+    title: "Ember Choir",
+    text: "Choir initiates turn ceremony into fuel. Their opening nights lean toward luminous ritual, memory wagers, and fast access to pyre relics.",
+    kickerA: "Opening Gift",
+    valueA: "Pyre sigil flare",
+    kickerB: "Signature Tension",
+    valueB: "Memory for power",
+  },
+  obsidian: {
+    title: "Obsidian Wing",
+    text: "Wing entrants begin with a colder oath: defensive scripture, controlled pressure, and a route that favors strategy over spectacle at first touch.",
+    kickerA: "Opening Gift",
+    valueA: "Sentinel ward seal",
+    kickerB: "Signature Tension",
+    valueB: "Discipline versus desire",
+  },
+  silver: {
+    title: "Silver Veil",
+    text: "Veil archivists open with path-reading, secret branches, and prophecy fragments that reward players who prefer discovery over direct confrontation.",
+    kickerA: "Opening Gift",
+    valueA: "Prophecy fragment map",
+    kickerB: "Signature Tension",
+    valueB: "Knowledge versus certainty",
+  },
+};
+
 let currentMode = "";
 let currentPilgrimage = "";
+let currentPortalStage = "";
+let currentPortalHouse = "";
 
 function setPanel(key) {
   const panel = panels[key];
@@ -298,10 +373,86 @@ ambienceButton.addEventListener("click", () => {
   }
 });
 
-openModalButton.addEventListener("click", () => {
-  if (typeof modal.showModal === "function") {
-    modal.showModal();
+function setPortalStage(key) {
+  const item = portalStageData[key];
+  if (!item || !portalStageTitle || !portalStageText) {
+    return;
   }
+
+  currentPortalStage = key;
+  portalStageTitle.textContent = item.title;
+  portalStageText.textContent = item.text;
+  portalKickerA.textContent = item.kickerA;
+  portalValueA.textContent = item.valueA;
+  portalKickerB.textContent = item.kickerB;
+  portalValueB.textContent = item.valueB;
+
+  portalStageTabs.forEach((tab) => {
+    const isActive = tab.dataset.stage === key;
+    tab.classList.toggle("is-active", isActive);
+    tab.setAttribute("aria-selected", String(isActive));
+  });
+
+  portalRouteItems.forEach((itemNode) => {
+    itemNode.classList.toggle("is-active", itemNode.dataset.route === item.route);
+  });
+}
+
+function setPortalHouse(key) {
+  const item = portalHouseData[key];
+  if (!item || !portalHouseTitle || !portalHouseText) {
+    return;
+  }
+
+  currentPortalHouse = key;
+  portalHouseTitle.textContent = item.title;
+  portalHouseText.textContent = item.text;
+  portalHouseKickerA.textContent = item.kickerA;
+  portalHouseValueA.textContent = item.valueA;
+  portalHouseKickerB.textContent = item.kickerB;
+  portalHouseValueB.textContent = item.valueB;
+
+  portalHouseTabs.forEach((tab) => {
+    const isActive = tab.dataset.house === key;
+    tab.classList.toggle("is-active", isActive);
+    tab.setAttribute("aria-selected", String(isActive));
+  });
+}
+
+function animatePortalOpen() {
+  if (!hasGsap || !modalShell) {
+    return;
+  }
+
+  gsap.fromTo(
+    ".portal-brief, .portal-preview-card, .portal-night-card, .portal-actions",
+    { y: 24, autoAlpha: 0 },
+    { y: 0, autoAlpha: 1, duration: 0.6, ease: "power3.out", stagger: 0.08 }
+  );
+
+  gsap.fromTo(
+    ".portal-orbit",
+    { scale: 0.88, autoAlpha: 0.2, rotate: 0 },
+    { scale: 1, autoAlpha: 1, rotate: 24, duration: 1.1, stagger: 0.06, ease: "power2.out" }
+  );
+}
+
+function openPortalModal() {
+  if (typeof modal.showModal === "function") {
+    setPortalStage(currentPortalStage || "identity");
+    setPortalHouse(currentPortalHouse || "choir");
+    modal.showModal();
+    document.body.classList.add("portal-open");
+    requestAnimationFrame(animatePortalOpen);
+  }
+}
+
+openModalButton.addEventListener("click", () => {
+  openPortalModal();
+});
+
+modal?.addEventListener("close", () => {
+  document.body.classList.remove("portal-open");
 });
 
 function setActiveRail(targetId) {
@@ -436,6 +587,16 @@ relicTabs.forEach((tab) => {
 modeTabs.forEach((tab) => {
   tab.setAttribute("aria-selected", String(tab.classList.contains("is-active")));
   tab.addEventListener("click", () => setMode(tab.dataset.mode));
+});
+
+portalStageTabs.forEach((tab) => {
+  tab.setAttribute("aria-selected", String(tab.classList.contains("is-active")));
+  tab.addEventListener("click", () => setPortalStage(tab.dataset.stage));
+});
+
+portalHouseTabs.forEach((tab) => {
+  tab.setAttribute("aria-selected", String(tab.classList.contains("is-active")));
+  tab.addEventListener("click", () => setPortalHouse(tab.dataset.house));
 });
 
 function initRevealFallback() {
@@ -769,3 +930,10 @@ setFaction("choir");
 setRelic("pyre");
 setPilgrimage("profile");
 setMode("solo");
+setPortalStage("identity");
+setPortalHouse("choir");
+
+const params = new URLSearchParams(window.location.search);
+if (params.get("portal") === "1") {
+  requestAnimationFrame(openPortalModal);
+}
