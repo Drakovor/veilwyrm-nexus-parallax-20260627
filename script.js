@@ -40,7 +40,9 @@ const revealCards = [...document.querySelectorAll(".reveal-card")];
 const heroZone = document.getElementById("hero-zone");
 const heroStage = document.querySelector(".hero-stage");
 const descentSection = document.getElementById("descent");
+const pilgrimageSection = document.getElementById("pilgrimage");
 const walkNodes = [...document.querySelectorAll(".walk-node")];
+const pilgrimageNodes = [...document.querySelectorAll(".pilgrimage-node")];
 const scenes = [...document.querySelectorAll(".parallax-scene")];
 const railLinks = [...document.querySelectorAll(".rail-link")];
 const commandSection = document.getElementById("command");
@@ -69,6 +71,13 @@ const modeValueB = document.getElementById("mode-value-b");
 const missionList = document.querySelector(".mission-list");
 const pulseTrack = document.querySelector(".pulse-track");
 const arcSteps = [...document.querySelectorAll(".arc-step")];
+const commandPhases = [...document.querySelectorAll(".command-phase")];
+const pilgrimageTitle = document.getElementById("pilgrimage-title");
+const pilgrimageText = document.getElementById("pilgrimage-text");
+const pilgrimageKickerA = document.getElementById("pilgrimage-kicker-a");
+const pilgrimageValueA = document.getElementById("pilgrimage-value-a");
+const pilgrimageKickerB = document.getElementById("pilgrimage-kicker-b");
+const pilgrimageValueB = document.getElementById("pilgrimage-value-b");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const hasGsap = Boolean(window.gsap && window.ScrollTrigger && !prefersReducedMotion);
 
@@ -222,6 +231,44 @@ const modeData = {
   },
 };
 
+const pilgrimageData = {
+  profile: {
+    title: "Join As More Than A Viewer",
+    text: "The full product starts before the stream: outsiders arrive through visual intrigue, then discover a profile loop, faction identity, reputation economy, and live consequences waiting underneath.",
+    kickerA: "Current Layer",
+    valueA: "Profile Oath",
+    kickerB: "Why It Hooks",
+    valueB: "Curiosity becomes identity",
+  },
+  faction: {
+    title: "Faction Choice Gives The World Shape",
+    text: "Houses make the project legible fast. They create belonging, rivalry, aesthetics, and a reason for players to return even when nothing is airing live.",
+    kickerA: "Current Layer",
+    valueA: "Faction Bond",
+    kickerB: "Why It Hooks",
+    valueB: "Belonging becomes tension",
+  },
+  reputation: {
+    title: "Reputation Turns Mystery Into Progression",
+    text: "Predictions, creative canon, puzzles, and raids become a visible status fabric that outsiders can understand and insiders can fight to improve.",
+    kickerA: "Current Layer",
+    valueA: "Reputation Weave",
+    kickerB: "Why It Hooks",
+    valueB: "Contribution becomes power",
+  },
+  live: {
+    title: "Live Events Cash Out Stored Meaning",
+    text: "When broadcast begins, the stream inherits everything players already did. Votes, sabotage, boosts, routes, and canon shocks finally hit the stage.",
+    kickerA: "Current Layer",
+    valueA: "Live Reckoning",
+    kickerB: "Why It Hooks",
+    valueB: "Memory becomes spectacle",
+  },
+};
+
+let currentMode = "";
+let currentPilgrimage = "";
+
 function setPanel(key) {
   const panel = panels[key];
   title.textContent = panel.title;
@@ -304,6 +351,12 @@ function setMode(key) {
     return;
   }
 
+  if (currentMode === key) {
+    return;
+  }
+
+  currentMode = key;
+
   modeTitle.textContent = item.title;
   modeText.textContent = item.text;
   modeKickerA.textContent = item.kickerA;
@@ -342,6 +395,33 @@ function setMode(key) {
 
   arcSteps.forEach((step) => {
     step.classList.toggle("is-active", step.dataset.step === item.activeStep);
+  });
+
+  commandPhases.forEach((phase) => {
+    phase.classList.toggle("is-active", phase.dataset.phase === key);
+  });
+}
+
+function setPilgrimage(key) {
+  const item = pilgrimageData[key];
+  if (!item || !pilgrimageTitle || !pilgrimageText) {
+    return;
+  }
+
+  if (currentPilgrimage === key) {
+    return;
+  }
+
+  currentPilgrimage = key;
+  pilgrimageTitle.textContent = item.title;
+  pilgrimageText.textContent = item.text;
+  pilgrimageKickerA.textContent = item.kickerA;
+  pilgrimageValueA.textContent = item.valueA;
+  pilgrimageKickerB.textContent = item.kickerB;
+  pilgrimageValueB.textContent = item.valueB;
+
+  pilgrimageNodes.forEach((node) => {
+    node.classList.toggle("is-active", node.dataset.pilgrimage === key);
   });
 }
 
@@ -391,7 +471,7 @@ if ("IntersectionObserver" in window) {
     { threshold: [0.25, 0.45, 0.65] }
   );
 
-  [heroZone, descentSection, ...scenes, commandSection, reviewSection].filter(Boolean).forEach((section) => {
+  [heroZone, descentSection, ...scenes, pilgrimageSection, commandSection, reviewSection].filter(Boolean).forEach((section) => {
     sectionObserver.observe(section);
   });
 }
@@ -416,6 +496,9 @@ function initPointerDepth() {
       layer.style.setProperty("--move-x", `${currentX * depth}px`);
       layer.style.setProperty("--move-y", `${currentY * depth}px`);
     });
+
+    document.documentElement.style.setProperty("--pointer-x", `${50 + currentX * 12}%`);
+    document.documentElement.style.setProperty("--pointer-y", `${38 + currentY * 9}%`);
 
     requestAnimationFrame(animatePointer);
   }
@@ -470,112 +553,129 @@ function initGsapParallax() {
       .to(".sigil-column", { y: -210, autoAlpha: 0.48 }, 0)
       .to(".scroll-meter", { y: -90, autoAlpha: 0.42 }, 0);
 
-    return () => {
-      document.documentElement.style.setProperty("--hero-progress", "0");
-    };
-  });
-
-  if (descentSection && walkNodes.length) {
-    const descentTimeline = gsap.timeline({
-      defaults: { ease: "none" },
-      scrollTrigger: {
-        trigger: descentSection,
-        start: "top top",
-        end: "+=240%",
-        pin: ".descent-stage",
-        scrub: 1,
-        anticipatePin: 1,
-        snap: {
-          snapTo: [0, 0.25, 0.5, 0.75, 1],
-          duration: { min: 0.2, max: 0.55 },
+    if (descentSection && walkNodes.length) {
+      const descentTimeline = gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: {
+          trigger: descentSection,
+          start: "top top",
+          end: "+=240%",
+          pin: ".descent-stage",
+          scrub: 1,
+          anticipatePin: 1,
+          snap: {
+            snapTo: [0, 0.25, 0.5, 0.75, 1],
+            duration: { min: 0.2, max: 0.55 },
+          },
         },
-      },
-    });
-
-    walkNodes.forEach((node, index) => {
-      gsap.set(node, {
-        "--node-z": "-1400px",
-        "--node-tilt": "18deg",
-        "--node-scale": 0.72,
-        "--node-opacity": 0,
       });
 
-      const start = index * 0.22;
-      descentTimeline
-        .to(
-          node,
-          {
-            "--node-z": "-180px",
-            "--node-tilt": "6deg",
-            "--node-scale": 0.92,
-            "--node-opacity": 1,
-          },
-          start
-        )
-        .to(
-          node,
-          {
-            "--node-z": "520px",
-            "--node-tilt": "-8deg",
-            "--node-scale": 1.16,
-            "--node-opacity": 0,
-          },
-          start + 0.18
-        );
-    });
-  }
+      walkNodes.forEach((node, index) => {
+        gsap.set(node, {
+          "--node-z": "-1400px",
+          "--node-tilt": "18deg",
+          "--node-scale": 0.72,
+          "--node-opacity": 0,
+        });
 
-  if (commandSection) {
-    gsap.fromTo(
-      ".command-mode-bar",
-      { yPercent: 18, autoAlpha: 0.5 },
-      {
-        yPercent: -10,
-        autoAlpha: 1,
-        ease: "none",
+        const start = index * 0.22;
+        descentTimeline
+          .to(
+            node,
+            {
+              "--node-z": "-180px",
+              "--node-tilt": "6deg",
+              "--node-scale": 0.92,
+              "--node-opacity": 1,
+            },
+            start
+          )
+          .to(
+            node,
+            {
+              "--node-z": "520px",
+              "--node-tilt": "-8deg",
+              "--node-scale": 1.16,
+              "--node-opacity": 0,
+            },
+            start + 0.18
+          );
+      });
+    }
+
+    if (pilgrimageSection && pilgrimageNodes.length) {
+      const pilgrimageKeys = pilgrimageNodes.map((node) => node.dataset.pilgrimage).filter(Boolean);
+      const pilgrimageTimeline = gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: {
+          trigger: pilgrimageSection,
+          start: "top top",
+          end: "+=230%",
+          pin: ".pilgrimage-stage",
+          scrub: 1,
+          anticipatePin: 1,
+          snap: {
+            snapTo: [0, 0.33, 0.66, 1],
+            duration: { min: 0.18, max: 0.45 },
+          },
+          onUpdate: (self) => {
+            const index = Math.min(
+              pilgrimageKeys.length - 1,
+              Math.round(self.progress * (pilgrimageKeys.length - 1))
+            );
+            setPilgrimage(pilgrimageKeys[index]);
+          },
+        },
+      });
+
+      pilgrimageTimeline
+        .fromTo(".pilgrimage-core", { yPercent: 14, scale: 0.92 }, { yPercent: -8, scale: 1.04 }, 0)
+        .fromTo(".orb-ring-a", { rotate: 0, scale: 0.56 }, { rotate: 90, scale: 0.68 }, 0)
+        .fromTo(".orb-ring-b", { rotate: 22, scale: 0.84 }, { rotate: 132, scale: 0.98 }, 0)
+        .fromTo(".orb-ring-c", { rotate: -18, scale: 1.08 }, { rotate: 82, scale: 1.18 }, 0)
+        .fromTo(".pilgrimage-node:nth-child(1)", { xPercent: -16, yPercent: -10, rotateY: 14 }, { xPercent: 10, yPercent: 10, rotateY: -8 }, 0)
+        .fromTo(".pilgrimage-node:nth-child(2)", { xPercent: 16, yPercent: -10, rotateY: -14 }, { xPercent: -10, yPercent: 10, rotateY: 8 }, 0)
+        .fromTo(".pilgrimage-node:nth-child(3)", { xPercent: -12, yPercent: 12, rotateY: 10 }, { xPercent: 12, yPercent: -10, rotateY: -8 }, 0)
+        .fromTo(".pilgrimage-node:nth-child(4)", { xPercent: 12, yPercent: 12, rotateY: -10 }, { xPercent: -12, yPercent: -10, rotateY: 8 }, 0)
+        .fromTo(".pilgrimage-ledger", { yPercent: 18, autoAlpha: 0.6 }, { yPercent: -12, autoAlpha: 1 }, 0);
+    }
+
+    if (commandSection) {
+      const commandKeys = Object.keys(modeData);
+      const commandTimeline = gsap.timeline({
+        defaults: { ease: "none" },
         scrollTrigger: {
           trigger: commandSection,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
+          start: "top top",
+          end: "+=230%",
+          pin: ".command-stage",
+          scrub: 1,
+          anticipatePin: 1,
+          snap: {
+            snapTo: [0, 0.5, 1],
+            duration: { min: 0.18, max: 0.42 },
+          },
+          onUpdate: (self) => {
+            document.documentElement.style.setProperty("--command-progress", self.progress.toFixed(4));
+            const index = Math.min(commandKeys.length - 1, Math.round(self.progress * (commandKeys.length - 1)));
+            setMode(commandKeys[index]);
+          },
         },
-      }
-    );
+      });
 
-    gsap.fromTo(
-      ".command-panel",
-      { yPercent: 8, rotateX: -2 },
-      {
-        yPercent: -8,
-        rotateX: 2,
-        stagger: 0.08,
-        ease: "none",
-        scrollTrigger: {
-          trigger: commandSection,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        },
-      }
-    );
+      commandTimeline
+        .fromTo(".command-ledger", { yPercent: 10, xPercent: -4 }, { yPercent: -8, xPercent: 3 }, 0)
+        .fromTo(".command-shell", { yPercent: 12 }, { yPercent: -6 }, 0)
+        .fromTo(".command-phase", { x: -14, autoAlpha: 0.45 }, { x: 0, autoAlpha: 1, stagger: 0.06 }, 0.05)
+        .fromTo(".progression-arc", { yPercent: 16 }, { yPercent: -6 }, 0.16)
+        .fromTo(".command-panel", { rotateX: -4, yPercent: 10 }, { rotateX: 2, yPercent: -10, stagger: 0.08 }, 0.08);
+    }
 
-    gsap.fromTo(
-      ".arc-step",
-      { yPercent: 20, autoAlpha: 0.55 },
-      {
-        yPercent: -6,
-        autoAlpha: 1,
-        stagger: 0.06,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".progression-arc",
-          start: "top 92%",
-          end: "bottom top",
-          scrub: true,
-        },
-      }
-    );
-  }
+    return () => {
+      document.documentElement.style.setProperty("--hero-progress", "0");
+      document.documentElement.style.setProperty("--command-progress", "0");
+    };
+  });
 
   scenes.forEach((scene) => {
     const bg = scene.querySelector(".scene-bg");
@@ -667,4 +767,5 @@ if (!prefersReducedMotion) {
 
 setFaction("choir");
 setRelic("pyre");
+setPilgrimage("profile");
 setMode("solo");
