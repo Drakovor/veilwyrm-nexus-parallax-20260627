@@ -43,8 +43,11 @@ const descentSection = document.getElementById("descent");
 const walkNodes = [...document.querySelectorAll(".walk-node")];
 const scenes = [...document.querySelectorAll(".parallax-scene")];
 const railLinks = [...document.querySelectorAll(".rail-link")];
+const commandSection = document.getElementById("command");
+const reviewSection = document.getElementById("review");
 const factionTabs = [...document.querySelectorAll(".faction-tab")];
 const relicTabs = [...document.querySelectorAll(".relic-tab")];
+const modeTabs = [...document.querySelectorAll(".mode-tab")];
 const factionTitle = document.getElementById("faction-title");
 const factionText = document.getElementById("faction-text");
 const factionKickerA = document.getElementById("faction-kicker-a");
@@ -57,6 +60,15 @@ const relicKickerA = document.getElementById("relic-kicker-a");
 const relicValueA = document.getElementById("relic-value-a");
 const relicKickerB = document.getElementById("relic-kicker-b");
 const relicValueB = document.getElementById("relic-value-b");
+const modeTitle = document.getElementById("mode-title");
+const modeText = document.getElementById("mode-text");
+const modeKickerA = document.getElementById("mode-kicker-a");
+const modeValueA = document.getElementById("mode-value-a");
+const modeKickerB = document.getElementById("mode-kicker-b");
+const modeValueB = document.getElementById("mode-value-b");
+const missionList = document.querySelector(".mission-list");
+const pulseTrack = document.querySelector(".pulse-track");
+const arcSteps = [...document.querySelectorAll(".arc-step")];
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const hasGsap = Boolean(window.gsap && window.ScrollTrigger && !prefersReducedMotion);
 
@@ -111,6 +123,102 @@ const relicData = {
     valueA: "Severe",
     kickerB: "Favored By",
     valueB: "Obsidian Wing",
+  },
+};
+
+const modeData = {
+  solo: {
+    title: "Solo Arc",
+    text: "Personal exploration leans into puzzles, reputation routes, secret relics, and private progression that still matters when the whole community wakes up.",
+    kickerA: "Primary Loop",
+    valueA: "Puzzle Hunts",
+    kickerB: "Best For",
+    valueB: "Off-stream nights",
+    missions: [
+      {
+        type: "Prediction",
+        title: "Guess the next cathedral rupture",
+        text: "Players commit to a prophecy lane before the next live event reshapes the map.",
+      },
+      {
+        type: "Creative Trial",
+        title: "Design a house sigil mutation",
+        text: "Entries earn favor, unlock cosmetics, and can become canon to the current season.",
+      },
+      {
+        type: "Faction Raid",
+        title: "Recover a relic shard before rivals do",
+        text: "Shared progress pulls the whole faction closer to a timed server-wide reveal.",
+      },
+    ],
+    pulses: [
+      "Profile and faction standing persist between sessions.",
+      "Private discoveries add hidden leverage before the public chapter turns.",
+      "Solo progress becomes proof of devotion when the world opens wider.",
+    ],
+    activeStep: "solo",
+  },
+  cabal: {
+    title: "Faction Cabal",
+    text: "This layer is where the product becomes social: houses coordinate raids, defend theories, and build long-running identities that outsiders can instantly read.",
+    kickerA: "Primary Loop",
+    valueA: "House Missions",
+    kickerB: "Best For",
+    valueB: "Community loyalty",
+    missions: [
+      {
+        type: "Council Vote",
+        title: "Choose the next rival house to sabotage",
+        text: "Each vote changes which narrative lane gets blocked, weakened, or opened next.",
+      },
+      {
+        type: "Creative Canon",
+        title: "Forge a faction banner for the season",
+        text: "Winning visuals enter the world permanently and raise the house prestige score.",
+      },
+      {
+        type: "Co-op Trial",
+        title: "Decode a split prophecy in teams",
+        text: "Fragments are distributed across members so cooperation becomes the mechanic, not just the theme.",
+      },
+    ],
+    pulses: [
+      "Faction reputation becomes a public ladder outsiders can follow at a glance.",
+      "Long-term group choices decide which relic pools and endings stay available.",
+      "Collective wins give the stream real stakes before it even starts.",
+    ],
+    activeStep: "cabal",
+  },
+  live: {
+    title: "Live Pulse",
+    text: "When broadcast starts, stored allegiance, missions, and predictions ignite into visible outcomes so the stream feels like a climax instead of the whole product.",
+    kickerA: "Primary Loop",
+    valueA: "World Events",
+    kickerB: "Best For",
+    valueB: "Peak participation",
+    missions: [
+      {
+        type: "Vote Storm",
+        title: "Trigger a route split in real time",
+        text: "Crowd choices can punish a faction, unlock a chamber, or alter the ritual path on stage.",
+      },
+      {
+        type: "Relic Drop",
+        title: "Spend stored favor for a one-night advantage",
+        text: "Off-stream reputation cashes out into handicaps, boosts, and rare interactive moments.",
+      },
+      {
+        type: "Canon Shock",
+        title: "Crown one community creation as official",
+        text: "The most active contributors can reshape what the audience sees next across the whole experience.",
+      },
+    ],
+    pulses: [
+      "Broadcast moments inherit weight from everything players already did.",
+      "Live decisions resolve rivalries that were built off-stream, not invented on the spot.",
+      "The outside viewer finally sees a world with memory, consequences, and factions already in motion.",
+    ],
+    activeStep: "live",
   },
 };
 
@@ -190,12 +298,64 @@ function setRelic(key) {
   });
 }
 
+function setMode(key) {
+  const item = modeData[key];
+  if (!item || !modeTitle || !modeText || !missionList || !pulseTrack) {
+    return;
+  }
+
+  modeTitle.textContent = item.title;
+  modeText.textContent = item.text;
+  modeKickerA.textContent = item.kickerA;
+  modeValueA.textContent = item.valueA;
+  modeKickerB.textContent = item.kickerB;
+  modeValueB.textContent = item.valueB;
+
+  missionList.innerHTML = item.missions
+    .map(
+      (mission) => `
+        <article class="mission-item">
+          <span class="mission-type">${mission.type}</span>
+          <h4>${mission.title}</h4>
+          <p>${mission.text}</p>
+        </article>
+      `
+    )
+    .join("");
+
+  pulseTrack.innerHTML = item.pulses
+    .map(
+      (pulse, index) => `
+        <article>
+          <span>${String(index + 1).padStart(2, "0")}</span>
+          <p>${pulse}</p>
+        </article>
+      `
+    )
+    .join("");
+
+  modeTabs.forEach((tab) => {
+    const isActive = tab.dataset.mode === key;
+    tab.classList.toggle("is-active", isActive);
+    tab.setAttribute("aria-selected", String(isActive));
+  });
+
+  arcSteps.forEach((step) => {
+    step.classList.toggle("is-active", step.dataset.step === item.activeStep);
+  });
+}
+
 factionTabs.forEach((tab) => {
   tab.addEventListener("click", () => setFaction(tab.dataset.faction));
 });
 
 relicTabs.forEach((tab) => {
   tab.addEventListener("click", () => setRelic(tab.dataset.relic));
+});
+
+modeTabs.forEach((tab) => {
+  tab.setAttribute("aria-selected", String(tab.classList.contains("is-active")));
+  tab.addEventListener("click", () => setMode(tab.dataset.mode));
 });
 
 function initRevealFallback() {
@@ -231,7 +391,7 @@ if ("IntersectionObserver" in window) {
     { threshold: [0.25, 0.45, 0.65] }
   );
 
-  [heroZone, ...scenes, document.getElementById("review")].filter(Boolean).forEach((section) => {
+  [heroZone, descentSection, ...scenes, commandSection, reviewSection].filter(Boolean).forEach((section) => {
     sectionObserver.observe(section);
   });
 }
@@ -365,6 +525,58 @@ function initGsapParallax() {
     });
   }
 
+  if (commandSection) {
+    gsap.fromTo(
+      ".command-mode-bar",
+      { yPercent: 18, autoAlpha: 0.5 },
+      {
+        yPercent: -10,
+        autoAlpha: 1,
+        ease: "none",
+        scrollTrigger: {
+          trigger: commandSection,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        },
+      }
+    );
+
+    gsap.fromTo(
+      ".command-panel",
+      { yPercent: 8, rotateX: -2 },
+      {
+        yPercent: -8,
+        rotateX: 2,
+        stagger: 0.08,
+        ease: "none",
+        scrollTrigger: {
+          trigger: commandSection,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        },
+      }
+    );
+
+    gsap.fromTo(
+      ".arc-step",
+      { yPercent: 20, autoAlpha: 0.55 },
+      {
+        yPercent: -6,
+        autoAlpha: 1,
+        stagger: 0.06,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".progression-arc",
+          start: "top 92%",
+          end: "bottom top",
+          scrub: true,
+        },
+      }
+    );
+  }
+
   scenes.forEach((scene) => {
     const bg = scene.querySelector(".scene-bg");
     const mist = scene.querySelector(".scene-mist");
@@ -455,3 +667,4 @@ if (!prefersReducedMotion) {
 
 setFaction("choir");
 setRelic("pyre");
+setMode("solo");
