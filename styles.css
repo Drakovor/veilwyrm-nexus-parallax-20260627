@@ -13,6 +13,9 @@
   --violet: #9a6af7;
   --shadow: rgba(0, 0, 0, 0.56);
   --hero-progress: 0;
+  --pointer-x: 50%;
+  --pointer-y: 38%;
+  --command-progress: 0;
 }
 
 * {
@@ -244,6 +247,24 @@ main {
   min-height: 100vh;
   overflow: hidden;
   isolation: isolate;
+}
+
+.hero-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at var(--pointer-x) var(--pointer-y),
+      rgba(255, 255, 255, 0) 0,
+      rgba(255, 255, 255, 0) 8rem,
+      rgba(7, 4, 13, 0.14) 15rem,
+      rgba(7, 4, 13, 0.68) 30rem,
+      rgba(7, 4, 13, 0.9) 48rem
+    );
+  opacity: calc(0.55 + (var(--hero-progress) * 0.28));
 }
 
 .has-gsap .hero-stage {
@@ -880,9 +901,230 @@ main {
   margin: 0.35rem 0 0;
 }
 
+.pilgrimage-section {
+  position: relative;
+  min-height: 320vh;
+  background:
+    radial-gradient(circle at 50% 22%, rgba(154, 106, 247, 0.18), transparent 24rem),
+    radial-gradient(circle at 50% 54%, rgba(185, 213, 141, 0.08), transparent 18rem),
+    linear-gradient(180deg, #06030a 0%, #100714 45%, #050309 100%);
+}
+
+.pilgrimage-stage {
+  position: sticky;
+  top: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.pilgrimage-stage::before,
+.pilgrimage-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.pilgrimage-stage::before {
+  background:
+    linear-gradient(90deg, rgba(246, 234, 255, 0.05), transparent 18%, transparent 82%, rgba(246, 234, 255, 0.05)),
+    linear-gradient(180deg, rgba(246, 234, 255, 0.04), transparent 20%, transparent 80%, rgba(246, 234, 255, 0.04));
+  mask: linear-gradient(180deg, transparent, #000 10%, #000 90%, transparent);
+}
+
+.pilgrimage-stage::after {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(154, 106, 247, 0.2), transparent 16rem),
+    radial-gradient(circle at 50% 50%, rgba(255, 177, 111, 0.1), transparent 24rem);
+  filter: blur(18px);
+}
+
+.pilgrimage-core,
+.pilgrimage-ring,
+.pilgrimage-ledger {
+  position: relative;
+  z-index: 1;
+}
+
+.pilgrimage-core {
+  position: absolute;
+  left: 50%;
+  top: 58%;
+  width: min(32rem, calc(100vw - 5rem));
+  padding: 1.4rem;
+  background:
+    linear-gradient(180deg, rgba(24, 14, 39, 0.84), rgba(7, 4, 13, 0.9)),
+    rgba(15, 9, 24, 0.76);
+  border: 1px solid rgba(239, 226, 255, 0.16);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 236, 248, 0.05),
+    0 30px 90px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(14px);
+  transform: translate(-50%, -50%);
+}
+
+.pilgrimage-orb {
+  position: absolute;
+  right: -2.6rem;
+  top: -2.8rem;
+  width: 12rem;
+  height: 12rem;
+  pointer-events: none;
+}
+
+.orb-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(239, 226, 255, 0.18);
+}
+
+.orb-ring-a {
+  transform: scale(0.56);
+  background: radial-gradient(circle, rgba(255, 177, 111, 0.22), rgba(154, 106, 247, 0.12), transparent 72%);
+}
+
+.orb-ring-b {
+  transform: rotate(22deg) scale(0.84);
+  border-color: rgba(241, 183, 212, 0.22);
+}
+
+.orb-ring-c {
+  transform: rotate(-18deg) scale(1.08);
+  border-color: rgba(185, 213, 141, 0.18);
+}
+
+.pilgrimage-copy h2 {
+  margin: 0;
+  font-family: "Cinzel", serif;
+  font-size: 3rem;
+  font-weight: 500;
+  line-height: 0.98;
+  text-transform: uppercase;
+}
+
+.pilgrimage-copy > p {
+  max-width: 27rem;
+  margin: 1rem 0 0;
+  color: rgba(246, 237, 247, 0.84);
+  font-size: 1.16rem;
+  line-height: 1.36;
+}
+
+.pilgrimage-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin-top: 1rem;
+}
+
+.pilgrimage-metrics article {
+  min-height: 7rem;
+  padding: 0.92rem;
+  background: rgba(9, 5, 16, 0.54);
+  border: 1px solid rgba(239, 226, 255, 0.1);
+}
+
+.pilgrimage-ring {
+  position: relative;
+  width: min(74rem, calc(100vw - 4rem));
+  height: 82vh;
+  perspective: 1800px;
+}
+
+.pilgrimage-node {
+  position: absolute;
+  width: min(15rem, 24vw);
+  padding: 1rem 1rem 1.05rem;
+  background:
+    linear-gradient(180deg, rgba(20, 12, 32, 0.82), rgba(8, 5, 14, 0.88)),
+    rgba(15, 9, 24, 0.72);
+  border: 1px solid rgba(239, 226, 255, 0.11);
+  box-shadow: 0 20px 58px rgba(0, 0, 0, 0.28);
+  color: var(--ink);
+  transform-style: preserve-3d;
+  transition:
+    transform 260ms ease,
+    opacity 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    background 220ms ease;
+}
+
+.pilgrimage-node:nth-child(1) {
+  left: 4%;
+  top: 10%;
+}
+
+.pilgrimage-node:nth-child(2) {
+  right: 3%;
+  top: 12%;
+}
+
+.pilgrimage-node:nth-child(3) {
+  left: 6%;
+  bottom: 24%;
+}
+
+.pilgrimage-node:nth-child(4) {
+  right: 2%;
+  bottom: 24%;
+}
+
+.pilgrimage-node.is-active {
+  border-color: rgba(185, 213, 141, 0.4);
+  background:
+    linear-gradient(180deg, rgba(33, 20, 52, 0.92), rgba(8, 5, 14, 0.92)),
+    rgba(15, 9, 24, 0.82);
+  box-shadow:
+    0 28px 80px rgba(0, 0, 0, 0.36),
+    0 0 28px rgba(154, 106, 247, 0.16);
+  transform: translate3d(0, -10px, 140px) scale(1.04);
+}
+
+.pilgrimage-index {
+  display: inline-flex;
+  margin-bottom: 0.65rem;
+  color: var(--accent);
+  font-family: "Cinzel", serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+}
+
+.pilgrimage-node h3,
+.command-ledger h3 {
+  margin: 0 0 0.45rem;
+  font-family: "Cinzel", serif;
+  font-size: 1.28rem;
+  font-weight: 500;
+}
+
+.pilgrimage-node p,
+.pilgrimage-ledger p,
+.command-ledger p,
+.command-phase p {
+  margin: 0;
+  color: rgba(246, 237, 247, 0.82);
+  font-size: 1.02rem;
+  line-height: 1.34;
+}
+
+.pilgrimage-ledger {
+  position: absolute;
+  left: max(1.5rem, 2vw);
+  bottom: 1.5rem;
+  max-width: 13rem;
+  padding: 1.15rem 1.2rem;
+  background: linear-gradient(180deg, rgba(18, 11, 30, 0.82), rgba(7, 4, 13, 0.84));
+  border: 1px solid rgba(239, 226, 255, 0.16);
+}
+
 .player-command-section {
   position: relative;
-  min-height: 110vh;
+  min-height: 320vh;
   padding: 7rem max(2.5rem, 7vw) 8rem;
   overflow: hidden;
   background:
@@ -916,11 +1158,82 @@ main {
 }
 
 .player-command-section .section-heading,
+.command-stage,
+.command-layout,
+.command-ledger,
 .command-mode-bar,
 .command-grid,
 .progression-arc {
   position: relative;
   z-index: 1;
+}
+
+.command-stage {
+  position: sticky;
+  top: 0;
+  min-height: 100vh;
+  display: grid;
+  align-content: center;
+  gap: 1.35rem;
+}
+
+.command-layout {
+  display: grid;
+  grid-template-columns: minmax(16rem, 19rem) minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.command-ledger {
+  padding: 1.2rem;
+  background:
+    linear-gradient(180deg, rgba(20, 12, 32, 0.82), rgba(8, 5, 14, 0.88)),
+    rgba(15, 9, 24, 0.72);
+  border: 1px solid rgba(239, 226, 255, 0.14);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(12px);
+}
+
+.command-phase-meter {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.command-phase {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.8rem;
+  align-items: start;
+  padding: 0.85rem;
+  background: rgba(9, 5, 16, 0.48);
+  border: 1px solid rgba(239, 226, 255, 0.1);
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    background 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.command-phase span {
+  color: rgba(255, 177, 111, 0.86);
+  font-family: "Cinzel", serif;
+  font-size: 1rem;
+  letter-spacing: 0.14em;
+}
+
+.command-phase.is-active {
+  border-color: rgba(185, 213, 141, 0.42);
+  background:
+    linear-gradient(135deg, rgba(154, 106, 247, 0.18), rgba(255, 177, 111, 0.08)),
+    rgba(9, 5, 16, 0.68);
+  box-shadow: 0 0 24px rgba(154, 106, 247, 0.14);
+  transform: translateX(6px);
+}
+
+.command-shell {
+  display: grid;
+  gap: 1rem;
 }
 
 .command-mode-bar {
@@ -1253,6 +1566,18 @@ main {
     grid-column: 1 / -1;
     transform: none;
   }
+
+  .command-layout {
+    grid-template-columns: minmax(14rem, 17rem) minmax(0, 1fr);
+  }
+
+  .pilgrimage-ring {
+    width: min(64rem, calc(100vw - 3rem));
+  }
+
+  .pilgrimage-node {
+    width: min(16rem, 29vw);
+  }
 }
 
 @media (max-width: 900px) {
@@ -1279,15 +1604,57 @@ main {
     min-height: auto;
   }
 
+  .pilgrimage-section,
   .descent-section {
     min-height: auto;
     padding: 6rem 1rem 4rem;
   }
 
+  .pilgrimage-stage,
   .descent-stage {
     position: relative;
     min-height: auto;
     gap: 1rem;
+  }
+
+  .pilgrimage-core,
+  .pilgrimage-ledger {
+    position: relative;
+    left: auto;
+    top: auto;
+    bottom: auto;
+    width: 100%;
+    max-width: none;
+    transform: none;
+  }
+
+  .pilgrimage-orb {
+    right: 0.25rem;
+    top: 0.25rem;
+    width: 8rem;
+    height: 8rem;
+  }
+
+  .pilgrimage-ring {
+    width: 100%;
+    height: auto;
+    perspective: none;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .pilgrimage-node,
+  .pilgrimage-node:nth-child(1),
+  .pilgrimage-node:nth-child(2),
+  .pilgrimage-node:nth-child(3),
+  .pilgrimage-node:nth-child(4) {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    width: 100%;
+    transform: none;
   }
 
   .descent-corridor {
@@ -1390,18 +1757,36 @@ main {
   }
 
   .player-command-section {
+    min-height: auto;
     padding: 5.5rem 1.4rem 6rem;
   }
 
+  .command-stage,
   .command-mode-bar {
     position: relative;
     top: auto;
+  }
+
+  .command-stage {
+    min-height: auto;
+  }
+
+  .command-layout,
+  .command-mode-bar {
     display: grid;
     width: 100%;
   }
 
+  .command-layout {
+    grid-template-columns: 1fr;
+  }
+
   .command-stats {
     grid-template-columns: 1fr;
+  }
+
+  .command-phase.is-active {
+    transform: none;
   }
 
   .mission-panel,
@@ -1460,12 +1845,20 @@ main {
     font-size: 1.22rem;
   }
 
+  .pilgrimage-copy h2 {
+    font-size: 2.35rem;
+  }
+
   .walk-node,
   .house-card,
   .review-card,
   .relic-strip article,
   .command-panel,
-  .arc-step {
+  .arc-step,
+  .pilgrimage-node,
+  .pilgrimage-core,
+  .pilgrimage-ledger,
+  .command-ledger {
     padding: 0.9rem;
   }
 }
@@ -1482,7 +1875,9 @@ main {
   .faction-tab,
   .relic-tab,
   .mode-tab,
+  .command-phase,
   .command-panel,
+  .pilgrimage-node,
   .arc-step,
   .primary-cta,
   .ghost-cta,
@@ -1499,7 +1894,20 @@ main {
     position: relative;
   }
 
-  .descent-section {
+  .hero-stage::before {
+    display: none;
+  }
+
+  .pilgrimage-section,
+  .descent-section,
+  .player-command-section {
+    min-height: auto;
+  }
+
+  .pilgrimage-stage,
+  .command-stage,
+  .descent-stage {
+    position: relative;
     min-height: auto;
   }
 }

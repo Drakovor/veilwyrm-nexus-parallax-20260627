@@ -49,12 +49,16 @@
         <span class="rail-index">V</span>
         <span class="rail-copy">Vault</span>
       </button>
-      <button class="rail-link" type="button" data-target="command">
+      <button class="rail-link" type="button" data-target="pilgrimage">
         <span class="rail-index">VI</span>
+        <span class="rail-copy">Pilgrimage</span>
+      </button>
+      <button class="rail-link" type="button" data-target="command">
+        <span class="rail-index">VII</span>
         <span class="rail-copy">Command</span>
       </button>
       <button class="rail-link" type="button" data-target="review">
-        <span class="rail-index">VII</span>
+        <span class="rail-index">VIII</span>
         <span class="rail-copy">Review</span>
       </button>
     </aside>
@@ -304,98 +308,189 @@
         </div>
       </section>
 
-      <section class="player-command-section" id="command">
-        <div class="section-heading reveal-card">
-          <p class="eyebrow">Player Command</p>
-          <h2>The app behind the atmosphere</h2>
-          <p>
-            Players enter a living social game: choose allegiance, build reputation, influence outcomes, and stay
-            engaged whether the stream is live or silent.
-          </p>
-        </div>
+      <section class="pilgrimage-section" id="pilgrimage">
+        <div class="pilgrimage-stage">
+          <div class="pilgrimage-core reveal-card">
+            <div class="pilgrimage-orb" aria-hidden="true">
+              <span class="orb-ring orb-ring-a"></span>
+              <span class="orb-ring orb-ring-b"></span>
+              <span class="orb-ring orb-ring-c"></span>
+            </div>
+            <div class="pilgrimage-copy">
+              <p class="eyebrow">Season Engine</p>
+              <h2 id="pilgrimage-title">Join As More Than A Viewer</h2>
+              <p id="pilgrimage-text">
+                The full product starts before the stream: outsiders arrive through visual intrigue, then discover a
+                profile loop, faction identity, reputation economy, and live consequences waiting underneath.
+              </p>
+              <div class="pilgrimage-metrics">
+                <article>
+                  <span class="metric-kicker" id="pilgrimage-kicker-a">Current Layer</span>
+                  <strong id="pilgrimage-value-a">Profile Oath</strong>
+                </article>
+                <article>
+                  <span class="metric-kicker" id="pilgrimage-kicker-b">Why It Hooks</span>
+                  <strong id="pilgrimage-value-b">Curiosity becomes identity</strong>
+                </article>
+              </div>
+            </div>
+          </div>
 
-        <div class="command-mode-bar reveal-card" role="tablist" aria-label="Engagement mode">
-          <button class="mode-tab is-active" type="button" role="tab" data-mode="solo">Solo Arc</button>
-          <button class="mode-tab" type="button" role="tab" data-mode="cabal">Faction Cabal</button>
-          <button class="mode-tab" type="button" role="tab" data-mode="live">Live Pulse</button>
-        </div>
+          <div class="pilgrimage-ring" aria-label="World progression map">
+            <article class="pilgrimage-node is-active" data-pilgrimage="profile">
+              <span class="pilgrimage-index">I</span>
+              <h3>Profile Oath</h3>
+              <p>Choose a look, claim a sigil, and give strangers a role to step into immediately.</p>
+            </article>
+            <article class="pilgrimage-node" data-pilgrimage="faction">
+              <span class="pilgrimage-index">II</span>
+              <h3>Faction Bond</h3>
+              <p>Join a house with visible values, rivals, and aesthetics so social gravity appears fast.</p>
+            </article>
+            <article class="pilgrimage-node" data-pilgrimage="reputation">
+              <span class="pilgrimage-index">III</span>
+              <h3>Reputation Weave</h3>
+              <p>Predictions, puzzles, and creative canon become the currency that makes the universe persist.</p>
+            </article>
+            <article class="pilgrimage-node" data-pilgrimage="live">
+              <span class="pilgrimage-index">IV</span>
+              <h3>Live Reckoning</h3>
+              <p>When broadcast begins, stored choices spill into routes, votes, sabotage, and public consequence.</p>
+            </article>
+          </div>
 
-        <div class="command-grid">
-          <section class="command-panel reveal-card">
-            <p class="eyebrow">Identity</p>
-            <h3 id="mode-title">Solo Arc</h3>
-            <p id="mode-text">
-              Personal exploration leans into puzzles, reputation routes, secret relics, and private progression that
-              still matters when the whole community wakes up.
+          <aside class="pilgrimage-ledger reveal-card">
+            <p class="eyebrow">Deep Perspective</p>
+            <h3>Scroll the campaign, not a brochure</h3>
+            <p>
+              This chamber frames the project like a living season map: each beat advances the social game and makes
+              the stream feel like an eruption, not the only content.
             </p>
-            <div class="command-stats">
-              <article>
-                <span class="metric-kicker" id="mode-kicker-a">Primary Loop</span>
-                <strong id="mode-value-a">Puzzle Hunts</strong>
-              </article>
-              <article>
-                <span class="metric-kicker" id="mode-kicker-b">Best For</span>
-                <strong id="mode-value-b">Off-stream nights</strong>
-              </article>
-            </div>
-          </section>
-
-          <section class="command-panel mission-panel reveal-card">
-            <p class="eyebrow">Mission Board</p>
-            <div class="mission-list">
-              <article class="mission-item">
-                <span class="mission-type">Prediction</span>
-                <h4 id="mission-title-a">Guess the next cathedral rupture</h4>
-                <p id="mission-text-a">Players commit to a prophecy lane before the next live event reshapes the map.</p>
-              </article>
-              <article class="mission-item">
-                <span class="mission-type">Creative Trial</span>
-                <h4 id="mission-title-b">Design a house sigil mutation</h4>
-                <p id="mission-text-b">Entries earn favor, unlock cosmetics, and can become canon to the current season.</p>
-              </article>
-              <article class="mission-item">
-                <span class="mission-type">Faction Raid</span>
-                <h4 id="mission-title-c">Recover a relic shard before rivals do</h4>
-                <p id="mission-text-c">Shared progress pulls the whole faction closer to a timed server-wide reveal.</p>
-              </article>
-            </div>
-          </section>
-
-          <section class="command-panel pulse-panel reveal-card">
-            <p class="eyebrow">System Pulse</p>
-            <div class="pulse-track">
-              <article>
-                <span>01</span>
-                <p>Profile and faction standing persist between sessions.</p>
-              </article>
-              <article>
-                <span>02</span>
-                <p>Votes, puzzles, and challenges shape global chapter outcomes.</p>
-              </article>
-              <article>
-                <span>03</span>
-                <p>Live streams become a climax, not the only place the world moves.</p>
-              </article>
-            </div>
-          </section>
+          </aside>
         </div>
+      </section>
 
-        <div class="progression-arc reveal-card" aria-label="Player progression arc">
-          <article class="arc-step is-active" data-step="solo">
-            <span class="arc-index">01</span>
-            <h3>Enter Alone</h3>
-            <p>Build a profile, choose the first allegiance, and discover secrets without waiting for a stream.</p>
-          </article>
-          <article class="arc-step" data-step="cabal">
-            <span class="arc-index">02</span>
-            <h3>Shape Reputation</h3>
-            <p>Predictions, creative trials, and faction missions become the long-term social currency.</p>
-          </article>
-          <article class="arc-step" data-step="live">
-            <span class="arc-index">03</span>
-            <h3>Strike Live</h3>
-            <p>When the broadcast starts, stored choices erupt into votes, handicaps, routes, and public outcomes.</p>
-          </article>
+      <section class="player-command-section" id="command">
+        <div class="command-stage">
+          <div class="section-heading reveal-card">
+            <p class="eyebrow">Player Command</p>
+            <h2>The app behind the atmosphere</h2>
+            <p>
+              Players enter a living social game: choose allegiance, build reputation, influence outcomes, and stay
+              engaged whether the stream is live or silent.
+            </p>
+          </div>
+
+          <div class="command-layout">
+            <aside class="command-ledger reveal-card">
+              <p class="eyebrow">Ritual Path</p>
+              <h3>Walk the loop to change the chamber</h3>
+              <p>
+                This stage now advances through player states as you scroll, so the app behaves like a guided rite
+                instead of a static feature list.
+              </p>
+              <div class="command-phase-meter" aria-label="Player lifecycle phases">
+                <article class="command-phase is-active" data-phase="solo">
+                  <span>01</span>
+                  <p>Awaken alone</p>
+                </article>
+                <article class="command-phase" data-phase="cabal">
+                  <span>02</span>
+                  <p>Bind to allies</p>
+                </article>
+                <article class="command-phase" data-phase="live">
+                  <span>03</span>
+                  <p>Break into live canon</p>
+                </article>
+              </div>
+            </aside>
+
+            <div class="command-shell">
+              <div class="command-mode-bar reveal-card" role="tablist" aria-label="Engagement mode">
+                <button class="mode-tab is-active" type="button" role="tab" data-mode="solo">Solo Arc</button>
+                <button class="mode-tab" type="button" role="tab" data-mode="cabal">Faction Cabal</button>
+                <button class="mode-tab" type="button" role="tab" data-mode="live">Live Pulse</button>
+              </div>
+
+              <div class="command-grid">
+                <section class="command-panel reveal-card">
+                  <p class="eyebrow">Identity</p>
+                  <h3 id="mode-title">Solo Arc</h3>
+                  <p id="mode-text">
+                    Personal exploration leans into puzzles, reputation routes, secret relics, and private progression
+                    that still matters when the whole community wakes up.
+                  </p>
+                  <div class="command-stats">
+                    <article>
+                      <span class="metric-kicker" id="mode-kicker-a">Primary Loop</span>
+                      <strong id="mode-value-a">Puzzle Hunts</strong>
+                    </article>
+                    <article>
+                      <span class="metric-kicker" id="mode-kicker-b">Best For</span>
+                      <strong id="mode-value-b">Off-stream nights</strong>
+                    </article>
+                  </div>
+                </section>
+
+                <section class="command-panel mission-panel reveal-card">
+                  <p class="eyebrow">Mission Board</p>
+                  <div class="mission-list">
+                    <article class="mission-item">
+                      <span class="mission-type">Prediction</span>
+                      <h4 id="mission-title-a">Guess the next cathedral rupture</h4>
+                      <p id="mission-text-a">Players commit to a prophecy lane before the next live event reshapes the map.</p>
+                    </article>
+                    <article class="mission-item">
+                      <span class="mission-type">Creative Trial</span>
+                      <h4 id="mission-title-b">Design a house sigil mutation</h4>
+                      <p id="mission-text-b">Entries earn favor, unlock cosmetics, and can become canon to the current season.</p>
+                    </article>
+                    <article class="mission-item">
+                      <span class="mission-type">Faction Raid</span>
+                      <h4 id="mission-title-c">Recover a relic shard before rivals do</h4>
+                      <p id="mission-text-c">Shared progress pulls the whole faction closer to a timed server-wide reveal.</p>
+                    </article>
+                  </div>
+                </section>
+
+                <section class="command-panel pulse-panel reveal-card">
+                  <p class="eyebrow">System Pulse</p>
+                  <div class="pulse-track">
+                    <article>
+                      <span>01</span>
+                      <p>Profile and faction standing persist between sessions.</p>
+                    </article>
+                    <article>
+                      <span>02</span>
+                      <p>Votes, puzzles, and challenges shape global chapter outcomes.</p>
+                    </article>
+                    <article>
+                      <span>03</span>
+                      <p>Live streams become a climax, not the only place the world moves.</p>
+                    </article>
+                  </div>
+                </section>
+              </div>
+
+              <div class="progression-arc reveal-card" aria-label="Player progression arc">
+                <article class="arc-step is-active" data-step="solo">
+                  <span class="arc-index">01</span>
+                  <h3>Enter Alone</h3>
+                  <p>Build a profile, choose the first allegiance, and discover secrets without waiting for a stream.</p>
+                </article>
+                <article class="arc-step" data-step="cabal">
+                  <span class="arc-index">02</span>
+                  <h3>Shape Reputation</h3>
+                  <p>Predictions, creative trials, and faction missions become the long-term social currency.</p>
+                </article>
+                <article class="arc-step" data-step="live">
+                  <span class="arc-index">03</span>
+                  <h3>Strike Live</h3>
+                  <p>When the broadcast starts, stored choices erupt into votes, handicaps, routes, and public outcomes.</p>
+                </article>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -404,8 +499,8 @@
           <p class="eyebrow">Build Review</p>
           <h2>Major Changes</h2>
           <p>
-            This pass turns the page into a fuller scroll experience: sticky hero, stronger parallax depth,
-            reveal timing, and responsive text checks.
+            This pass pushes the project closer to a walk-through product world: a season engine, a staged command
+            chamber, stronger depth cues, and clearer player progression.
           </p>
         </div>
 
