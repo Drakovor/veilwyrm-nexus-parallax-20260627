@@ -525,17 +525,126 @@
     </main>
 
     <dialog class="nexus-modal" id="nexus-modal">
-      <div class="modal-copy">
-        <p class="eyebrow">Gate Opened</p>
-        <h2>Welcome To The Inner Sanctum</h2>
-        <p>
-          The next layer can become faction selection, a soundtrack control, or a deployable preview branch for
-          outside review.
-        </p>
+      <div class="nexus-modal-shell">
+        <div class="portal-atmosphere" aria-hidden="true">
+          <span class="portal-orbit orbit-a"></span>
+          <span class="portal-orbit orbit-b"></span>
+          <span class="portal-orbit orbit-c"></span>
+        </div>
+
+        <section class="portal-brief">
+          <p class="eyebrow">Gate Opened</p>
+          <h2>Step Into The Inner Sanctum</h2>
+          <p>
+            This is the first in-world app layer: claim an identity, bind to a house, and preview the first night of
+            the season before the broader portal expands further.
+          </p>
+
+          <div class="portal-stage-tabs" role="tablist" aria-label="Onboarding ritual">
+            <button class="portal-stage-tab is-active" type="button" role="tab" data-stage="identity">Profile Oath</button>
+            <button class="portal-stage-tab" type="button" role="tab" data-stage="house">House Bond</button>
+            <button class="portal-stage-tab" type="button" role="tab" data-stage="objective">First Objective</button>
+          </div>
+
+          <div class="portal-copy-card">
+            <p class="panel-label">Current Rite</p>
+            <h3 id="portal-stage-title">Choose a visible role</h3>
+            <p id="portal-stage-text">
+              Start with a sigil, a title, and a tone so even an outsider can feel like they crossed into a living
+              faction world instead of joining a flat account system.
+            </p>
+          </div>
+
+          <div class="portal-stat-grid">
+            <article>
+              <span class="metric-kicker" id="portal-kicker-a">Immediate Reward</span>
+              <strong id="portal-value-a">Identity and aura</strong>
+            </article>
+            <article>
+              <span class="metric-kicker" id="portal-kicker-b">Long Arc</span>
+              <strong id="portal-value-b">Reputation becomes myth</strong>
+            </article>
+          </div>
+
+          <div class="portal-route-list" aria-label="First route options">
+            <article class="portal-route-item is-active" data-route="solo">
+              <span>01</span>
+              <div>
+                <h4>Solo intrigue</h4>
+                <p>Private clues, prophecy routes, and secret favor.</p>
+              </div>
+            </article>
+            <article class="portal-route-item" data-route="cabal">
+              <span>02</span>
+              <div>
+                <h4>Faction cabal</h4>
+                <p>Allied raids, creative canon, and visible loyalty.</p>
+              </div>
+            </article>
+            <article class="portal-route-item" data-route="live">
+              <span>03</span>
+              <div>
+                <h4>Live eruption</h4>
+                <p>Stored choices hit the stream as consequence and spectacle.</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="portal-preview">
+          <div class="portal-preview-card">
+            <p class="eyebrow">House Selection</p>
+            <div class="portal-house-switcher" role="tablist" aria-label="House preview">
+              <button class="portal-house-tab is-active" type="button" role="tab" data-house="choir">Ember Choir</button>
+              <button class="portal-house-tab" type="button" role="tab" data-house="obsidian">Obsidian Wing</button>
+              <button class="portal-house-tab" type="button" role="tab" data-house="silver">Silver Veil</button>
+            </div>
+
+            <div class="portal-house-hero">
+              <p class="panel-label">Previewed Allegiance</p>
+              <h3 id="portal-house-title">Ember Choir</h3>
+              <p id="portal-house-text">
+                Choir initiates turn ceremony into fuel. Their opening nights lean toward luminous ritual, memory
+                wagers, and fast access to pyre relics.
+              </p>
+            </div>
+
+            <div class="portal-house-metrics">
+              <article>
+                <span class="metric-kicker" id="portal-house-kicker-a">Opening Gift</span>
+                <strong id="portal-house-value-a">Pyre sigil flare</strong>
+              </article>
+              <article>
+                <span class="metric-kicker" id="portal-house-kicker-b">Signature Tension</span>
+                <strong id="portal-house-value-b">Memory for power</strong>
+              </article>
+            </div>
+          </div>
+
+          <div class="portal-night-card">
+            <p class="eyebrow">First Night Flow</p>
+            <div class="portal-night-list">
+              <article>
+                <span>01</span>
+                <p>Create the profile mask and pick the house that best matches your desired myth.</p>
+              </article>
+              <article>
+                <span>02</span>
+                <p>Complete a prediction, a puzzle, or a creative rite to earn the first thread of favor.</p>
+              </article>
+              <article>
+                <span>03</span>
+                <p>Carry that favor into the next live chapter where it changes votes, routes, and visibility.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <form method="dialog" class="portal-actions">
+          <button class="ghost-cta modal-close" type="submit">Close Portal</button>
+          <button class="primary-cta modal-enter" type="submit">Seal This Preview</button>
+        </form>
       </div>
-      <form method="dialog">
-        <button class="primary-cta modal-close" type="submit">Close Portal</button>
-      </form>
     </dialog>
 
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>

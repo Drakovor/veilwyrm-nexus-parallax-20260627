@@ -48,6 +48,10 @@ body.ambience-shifted {
     linear-gradient(180deg, #060711 0%, #111525 48%, #050309 100%);
 }
 
+body.portal-open {
+  overflow: hidden;
+}
+
 button,
 a {
   -webkit-tap-highlight-color: transparent;
@@ -1506,24 +1510,290 @@ main {
 }
 
 .nexus-modal {
-  width: min(31rem, calc(100vw - 2rem));
-  padding: 1.4rem;
+  width: min(82rem, calc(100vw - 2rem));
+  max-width: none;
+  min-height: min(48rem, calc(100vh - 2rem));
+  max-height: calc(100vh - 2rem);
+  padding: 0;
   color: var(--ink);
-  background: linear-gradient(180deg, rgba(25, 13, 42, 0.94), rgba(8, 5, 14, 0.94));
+  background:
+    radial-gradient(circle at 50% 44%, rgba(154, 106, 247, 0.2), transparent 16rem),
+    linear-gradient(180deg, rgba(25, 13, 42, 0.96), rgba(8, 5, 14, 0.96));
   border: 1px solid rgba(239, 226, 255, 0.24);
+  overflow: auto;
+}
+
+.nexus-modal[open] {
+  animation: modal-rise 360ms ease;
+}
+
+.nexus-modal-shell {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(22rem, 28rem);
+  gap: 1.25rem;
+  min-height: inherit;
+  padding: 1.4rem 1.4rem 6.4rem;
+  background:
+    linear-gradient(90deg, rgba(6, 3, 10, 0.62), rgba(6, 3, 10, 0.18) 42%, rgba(6, 3, 10, 0.58)),
+    url("./assets/veilwyrm-nexus-hero.png") center top / cover;
+}
+
+.nexus-modal-shell::before,
+.nexus-modal-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.nexus-modal-shell::before {
+  background:
+    linear-gradient(90deg, rgba(246, 234, 255, 0.05), transparent 12%, transparent 88%, rgba(246, 234, 255, 0.05)),
+    linear-gradient(180deg, rgba(246, 234, 255, 0.03), transparent 12%, transparent 88%, rgba(246, 234, 255, 0.03));
+}
+
+.nexus-modal-shell::after {
+  background:
+    radial-gradient(circle at 58% 40%, rgba(154, 106, 247, 0.22), transparent 17rem),
+    radial-gradient(circle at 74% 64%, rgba(255, 177, 111, 0.08), transparent 22rem);
+  mix-blend-mode: screen;
+}
+
+.portal-atmosphere,
+.portal-brief,
+.portal-preview,
+.portal-actions {
+  position: relative;
+  z-index: 1;
+}
+
+.portal-atmosphere {
+  position: absolute;
+  inset: 0;
+}
+
+.portal-orbit {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(239, 226, 255, 0.1);
+}
+
+.orbit-a {
+  right: 14%;
+  top: 18%;
+  width: 13rem;
+  height: 13rem;
+}
+
+.orbit-b {
+  right: 9%;
+  top: 12%;
+  width: 18rem;
+  height: 18rem;
+  border-color: rgba(185, 213, 141, 0.1);
+}
+
+.orbit-c {
+  right: 4%;
+  top: 6%;
+  width: 24rem;
+  height: 24rem;
+  border-color: rgba(241, 183, 212, 0.08);
+}
+
+.portal-brief,
+.portal-preview-card,
+.portal-night-card {
+  backdrop-filter: blur(12px);
+}
+
+.portal-brief {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+  padding: 1.2rem;
+  background: linear-gradient(180deg, rgba(17, 10, 28, 0.84), rgba(7, 4, 13, 0.88));
+  border: 1px solid rgba(239, 226, 255, 0.14);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.3);
+}
+
+.portal-brief h2,
+.portal-copy-card h3,
+.portal-preview-card h3 {
+  margin: 0;
+  font-family: "Cinzel", serif;
+  font-weight: 500;
+}
+
+.portal-brief h2 {
+  font-size: 3.2rem;
+  line-height: 0.96;
+  text-transform: uppercase;
+}
+
+.portal-brief > p,
+.portal-copy-card p,
+.portal-night-list p,
+.portal-route-item p,
+.portal-house-hero p {
+  margin: 0;
+  color: rgba(246, 237, 247, 0.84);
+  font-size: 1.08rem;
+  line-height: 1.36;
+}
+
+.portal-stage-tabs,
+.portal-house-switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.portal-stage-tab,
+.portal-house-tab {
+  min-height: 2.7rem;
+  padding: 0.65rem 0.9rem;
+  color: rgba(246, 237, 247, 0.74);
+  background: rgba(13, 8, 22, 0.56);
+  border: 1px solid rgba(239, 226, 255, 0.12);
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease,
+    color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.portal-stage-tab:hover,
+.portal-stage-tab:focus-visible,
+.portal-stage-tab.is-active,
+.portal-house-tab:hover,
+.portal-house-tab:focus-visible,
+.portal-house-tab.is-active {
+  color: var(--ink);
+  background:
+    linear-gradient(135deg, rgba(154, 106, 247, 0.3), rgba(255, 177, 111, 0.16)),
+    rgba(22, 13, 35, 0.82);
+  border-color: rgba(185, 213, 141, 0.38);
+  box-shadow: 0 0 24px rgba(154, 106, 247, 0.18);
+  transform: translateY(-2px);
+}
+
+.portal-copy-card,
+.portal-preview-card,
+.portal-night-card {
+  padding: 1rem;
+  background:
+    linear-gradient(180deg, rgba(23, 13, 37, 0.84), rgba(8, 5, 14, 0.88)),
+    rgba(15, 9, 24, 0.74);
+  border: 1px solid rgba(239, 226, 255, 0.13);
+}
+
+.portal-copy-card h3,
+.portal-house-hero h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.7rem;
+}
+
+.portal-stat-grid,
+.portal-house-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.portal-stat-grid article,
+.portal-house-metrics article {
+  min-height: 6.8rem;
+  padding: 0.85rem;
+  background: rgba(9, 5, 16, 0.46);
+  border: 1px solid rgba(239, 226, 255, 0.1);
+}
+
+.portal-route-list,
+.portal-night-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.portal-route-item,
+.portal-night-list article {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.8rem;
+  align-items: start;
+  padding: 0.85rem;
+  background: rgba(9, 5, 16, 0.46);
+  border: 1px solid rgba(239, 226, 255, 0.1);
+}
+
+.portal-route-item span,
+.portal-night-list span {
+  color: rgba(255, 177, 111, 0.88);
+  font-family: "Cinzel", serif;
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+}
+
+.portal-route-item.is-active {
+  border-color: rgba(185, 213, 141, 0.4);
+  background:
+    linear-gradient(135deg, rgba(154, 106, 247, 0.16), rgba(255, 177, 111, 0.08)),
+    rgba(9, 5, 16, 0.66);
+  box-shadow: 0 0 22px rgba(154, 106, 247, 0.14);
+}
+
+.portal-route-item h4 {
+  margin: 0 0 0.25rem;
+  font-family: "Cinzel", serif;
+  font-size: 1.08rem;
+  font-weight: 500;
+}
+
+.portal-preview {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+}
+
+.portal-house-hero {
+  margin-top: 0.95rem;
+}
+
+.portal-actions {
+  position: absolute;
+  left: 1.4rem;
+  right: 1.4rem;
+  bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.9rem;
 }
 
 .nexus-modal::backdrop {
   background: rgba(6, 4, 12, 0.75);
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(10px);
 }
 
-.modal-copy p:last-child {
-  margin-bottom: 1rem;
-}
-
+.modal-enter,
 .modal-close {
-  width: 100%;
+  min-width: 14rem;
+}
+
+@keyframes modal-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 @media (max-width: 1180px) {
@@ -1578,6 +1848,14 @@ main {
   .pilgrimage-node {
     width: min(16rem, 29vw);
   }
+
+  .nexus-modal-shell {
+    grid-template-columns: minmax(0, 1fr) minmax(20rem, 24rem);
+  }
+
+  .portal-brief h2 {
+    font-size: 2.7rem;
+  }
 }
 
 @media (max-width: 900px) {
@@ -1602,6 +1880,35 @@ main {
 
   .hero-scroll-zone {
     min-height: auto;
+  }
+
+  .nexus-modal {
+    width: min(calc(100vw - 1rem), 46rem);
+    min-height: auto;
+  }
+
+  .nexus-modal-shell {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  .portal-preview {
+    padding-bottom: 5rem;
+  }
+
+  .portal-actions {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-top: 0.4rem;
+  }
+
+  .portal-stat-grid,
+  .portal-house-metrics {
+    grid-template-columns: 1fr;
   }
 
   .pilgrimage-section,
@@ -1849,6 +2156,21 @@ main {
     font-size: 2.35rem;
   }
 
+  .portal-brief h2 {
+    font-size: 2.2rem;
+  }
+
+  .portal-stage-tab,
+  .portal-house-tab {
+    width: 100%;
+  }
+
+  .modal-enter,
+  .modal-close {
+    width: 100%;
+    min-width: 0;
+  }
+
   .walk-node,
   .house-card,
   .review-card,
@@ -1875,6 +2197,8 @@ main {
   .faction-tab,
   .relic-tab,
   .mode-tab,
+  .portal-stage-tab,
+  .portal-house-tab,
   .command-phase,
   .command-panel,
   .pilgrimage-node,
@@ -1909,5 +2233,10 @@ main {
   .descent-stage {
     position: relative;
     min-height: auto;
+  }
+
+  .portal-actions,
+  .nexus-modal[open] {
+    animation: none;
   }
 }
