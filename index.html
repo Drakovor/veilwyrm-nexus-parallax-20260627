@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Veilwyrm Nexus</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="scene-frame" aria-hidden="true"></div>
+
+    <header class="topbar">
+      <a class="brand-mark" href="#hero-zone" aria-label="Veilwyrm Nexus home">
+        <span class="eyebrow">Mythic Archive</span>
+        <strong>Veilwyrm Nexus</strong>
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <button class="nav-chip is-active" type="button" data-panel="lore">Lore</button>
+        <button class="nav-chip" type="button" data-panel="rites">Rites</button>
+        <button class="nav-chip" type="button" data-panel="vault">Vault</button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero-scroll-zone" id="hero-zone">
+        <div class="hero-stage">
+          <div class="hero-depth" aria-hidden="true">
+            <img
+              class="hero-base motion-layer"
+              src="./assets/veilwyrm-nexus-hero.png"
+              alt=""
+              data-depth="8"
+              data-hero-speed="-96"
+              data-scale-speed="0.18"
+            />
+            <img
+              class="mist mist-rear motion-layer"
+              src="./assets/parallax-mist.png"
+              alt=""
+              data-depth="18"
+              data-hero-speed="-220"
+              data-scale-speed="0.22"
+            />
+            <div class="cathedral-halo motion-layer" data-depth="12" data-hero-speed="-150" data-scale-speed="0.16"></div>
+            <img
+              class="embers motion-layer"
+              src="./assets/parallax-embers.png"
+              alt=""
+              data-depth="34"
+              data-hero-speed="-390"
+              data-scale-speed="0.3"
+            />
+            <img
+              class="mist mist-front motion-layer"
+              src="./assets/parallax-mist.png"
+              alt=""
+              data-depth="28"
+              data-hero-speed="-330"
+              data-scale-speed="0.25"
+            />
+          </div>
+
+          <aside class="sigil-column motion-layer" aria-label="Runic callout" data-depth="14" data-hero-speed="-120">
+            <span class="sigil-line"></span>
+            <p>Awaken the<br />forgotten gate</p>
+          </aside>
+
+          <section class="hero-copy motion-layer" data-depth="16" data-hero-speed="-62">
+            <p class="eyebrow">Cathedral Of Embered Wings</p>
+            <h1>Veilwyrm Nexus</h1>
+            <p class="lede">
+              A cinematic dark fantasy portal where ruined sanctums, living sigils, and winged houses unfold as
+              you descend through the veil.
+            </p>
+
+            <div class="cta-row">
+              <button class="primary-cta" type="button" id="open-modal">Enter Nexus</button>
+              <button class="ghost-cta" type="button" id="toggle-ambience">Shift Ambience</button>
+            </div>
+          </section>
+
+          <aside
+            class="oracle-panel motion-layer"
+            aria-live="polite"
+            data-depth="22"
+            data-hero-speed="-210"
+            data-scale-speed="0.04"
+          >
+            <p class="panel-label">Current Chronicle</p>
+            <h2 id="panel-title">The Queen Beyond The Veil</h2>
+            <p id="panel-text">
+              A whispered dossier on the sovereign who binds fire, shadow, and forgotten scripture into a single
+              command.
+            </p>
+
+            <div class="oracle-meta">
+              <div>
+                <span class="meta-label" id="meta-label">Veil Stability</span>
+                <strong id="meta-value">82%</strong>
+              </div>
+              <blockquote id="panel-quote">
+                "Each opened gate remembers the hand that asked too much of it."
+              </blockquote>
+            </div>
+
+            <button class="text-link" type="button" id="cycle-panel">Reveal Next Fragment</button>
+          </aside>
+
+          <div class="scroll-meter motion-layer" aria-hidden="true" data-depth="26" data-hero-speed="-260">
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="chapter-scene parallax-scene" id="threshold">
+        <img class="scene-bg scene-bg-wide" src="./assets/veilwyrm-nexus-hero.png" alt="" />
+        <img class="scene-mist" src="./assets/parallax-mist.png" alt="" />
+        <div class="chapter-content reveal-card">
+          <p class="eyebrow">Threshold</p>
+          <h2>Midnight Rituals</h2>
+          <p>
+            The first descent is ceremonial: embers move fastest in the foreground, the cathedral drifts behind,
+            and the player reads the page as a moving world instead of a static poster.
+          </p>
+        </div>
+        <div class="chapter-stat reveal-card" aria-label="Threshold stats">
+          <span>07</span>
+          <p>Dynasties waiting behind the gate</p>
+        </div>
+      </section>
+
+      <section class="chapter-scene parallax-scene is-reversed" id="houses">
+        <img class="scene-bg scene-bg-left" src="./assets/veilwyrm-nexus-hero.png" alt="" />
+        <img class="scene-mist" src="./assets/parallax-mist.png" alt="" />
+        <div class="chapter-content reveal-card">
+          <p class="eyebrow">Dominion</p>
+          <h2>Winged Houses</h2>
+          <p>
+            Faction cards now arrive after a full scroll beat, so the page feels closer to a game portal with
+            chapters, reveal timing, and a stronger sense of progression.
+          </p>
+        </div>
+        <div class="house-grid">
+          <article class="house-card reveal-card">
+            <p class="eyebrow">House I</p>
+            <h3>Ember Choir</h3>
+            <p>Ritualists who trade memory for flame relics.</p>
+          </article>
+          <article class="house-card reveal-card">
+            <p class="eyebrow">House II</p>
+            <h3>Obsidian Wing</h3>
+            <p>Sentinels bound to shadow scripture.</p>
+          </article>
+          <article class="house-card reveal-card">
+            <p class="eyebrow">House III</p>
+            <h3>Silver Veil</h3>
+            <p>Archivists who map prophecy through living sigils.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="chapter-scene parallax-scene" id="vault">
+        <img class="scene-bg scene-bg-right" src="./assets/veilwyrm-nexus-hero.png" alt="" />
+        <img class="scene-mist" src="./assets/parallax-mist.png" alt="" />
+        <div class="chapter-content reveal-card">
+          <p class="eyebrow">Archive</p>
+          <h2>Runeborne Vault</h2>
+          <p>
+            The final scene uses slower background drift and faster foreground fog to make the page feel deeper
+            as the relic system comes into view.
+          </p>
+        </div>
+        <div class="relic-strip reveal-card" aria-label="Relic counts">
+          <article>
+            <span>32</span>
+            <p>Vault rites</p>
+          </article>
+          <article>
+            <span>118</span>
+            <p>Relics awakened</p>
+          </article>
+          <article>
+            <span>04</span>
+            <p>Hidden endings</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="review-section" id="review">
+        <div class="section-heading reveal-card">
+          <p class="eyebrow">Build Review</p>
+          <h2>Major Changes</h2>
+          <p>
+            This pass turns the page into a fuller scroll experience: sticky hero, stronger parallax depth,
+            reveal timing, and responsive text checks.
+          </p>
+        </div>
+
+        <div class="review-grid">
+          <article class="review-card reveal-card">
+            <p class="eyebrow">Motion</p>
+            <h3>Sticky parallax hero</h3>
+            <p>Hero layers now separate by scroll speed, pointer depth, and scale so movement is obvious.</p>
+          </article>
+          <article class="review-card reveal-card">
+            <p class="eyebrow">Structure</p>
+            <h3>Scene-based chapters</h3>
+            <p>Three full viewport scenes expand the page beyond the first image into a game-style portal.</p>
+          </article>
+          <article class="review-card reveal-card">
+            <p class="eyebrow">Text</p>
+            <h3>Responsive typography</h3>
+            <p>Hero and panel type use stable sizes with breakpoint tuning so long text has room to breathe.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <dialog class="nexus-modal" id="nexus-modal">
+      <div class="modal-copy">
+        <p class="eyebrow">Gate Opened</p>
+        <h2>Welcome To The Inner Sanctum</h2>
+        <p>
+          The next layer can become faction selection, a soundtrack control, or a deployable preview branch for
+          outside review.
+        </p>
+      </div>
+      <form method="dialog">
+        <button class="primary-cta modal-close" type="submit">Close Portal</button>
+      </form>
+    </dialog>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>
